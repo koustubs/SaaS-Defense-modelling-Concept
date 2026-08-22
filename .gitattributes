@@ -1,0 +1,17 @@
+# Normalize modern text files while preserving historical evidence byte-for-byte.
+* text=auto
+
+*.css text eol=lf
+*.html text eol=lf
+*.json text eol=lf
+*.md text eol=lf
+*.puml text eol=lf
+*.py text eol=lf
+*.toml text eol=lf
+*.txt text eol=lf
+*.uml text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+
+*.png binary
+original_evidence/** -text

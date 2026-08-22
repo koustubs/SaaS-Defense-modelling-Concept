@@ -1,0 +1,104 @@
+@startuml Notes Application Sequence Diagram
+title Notes Application - User Sync Flow
+
+actor "User" as U
+participant "Web Client" as WC
+participant "API Gateway" as AG
+participant "Auth Service" as AS
+participant "Notes Service" as NS
+participant "Database" as DB
+
+== Initial Access ==
+U -> WC : Access notes app
+WC -> AG : GET /api/notes (no auth header)
+AG -> NS : Forward request
+NS -> DB : Query notes
+DB --> NS : Return all notes
+NS --> AG : Return notes data
+AG --> WC : Return notes data
+WC --> U : Display notes
+
+== User Login ==
+U -> WC : Enter credentials
+WC -> AG : POST /api/login
+AG -> AS : Validate credentials
+AS --> AG : Return auth token
+AG --> WC : Return auth token
+WC -> WC : Store token
+
+== Sync Notes ==
+U -> WC : Click sync button
+WC -> AG : POST /api/notes/sync (with token)
+AG -> AS : Validate token
+AS --> AG : Token valid
+AG -> NS : Process sync request
+NS -> DB : Update notes
+DB --> NS : Confirmation
+NS --> AG : Sync complete
+AG --> WC : Sync success
+WC --> U : Show success message
+
+== Create Note ==
+U -> WC : Create new note
+WC -> AG : POST /api/notes/create
+note right: No input validation
+AG -> NS : Create note
+NS -> DB : Insert note
+note right: No audit logging
+DB --> NS : Note created
+NS --> AG : Note created
+AG --> WC : Note created
+WC --> U : Show new note
+
+== Export Notes ==
+U -> WC : Export all notes
+WC -> AG : GET /api/notes/export
+note right: No rate limiting
+AG -> NS : Export request
+NS -> DB : Query all notes
+DB --> NS : All notes data
+NS --> AG : Export file
+AG --> WC : Export file
+WC --> U : Download file
+
+== Error Handling ==
+U -> WC : Invalid input
+WC -> AG : POST /api/notes/create
+AG -> NS : Process request
+NS -> DB : Insert attempt
+DB --> NS : Error: "Password field contains invalid characters"
+note right: Sensitive data in error
+NS --> AG : Error response
+AG --> WC : Error message
+WC --> U : Show error
+
+== Security Weaknesses ==
+U -> WC : Login (no 2FA)
+WC -> AG : POST /api/login
+AG -> AS : Validate credentials (no 2FA check)
+AS --> AG : Return auth token
+AG --> WC : Return auth token
+
+U -> WC : Multiple failed logins
+loop 10 times
+    WC -> AG : POST /api/login (wrong password)
+    AG --> WC : Error: Invalid credentials
+end
+' No account lockout or CAPTCHA
+
+U -> WC : Login from new device
+WC -> AG : POST /api/login (new device)
+AG -> AS : Validate credentials
+AS --> AG : Return auth token
+AG --> WC : Return auth token
+' No notification or alert sent to user
+
+U -> WC : Edit note
+WC -> WC : Edit note content
+' No autosave implemented
+
+U -> WC : Delete note
+WC -> AG : DELETE /api/notes/{id}
+' No confirmation dialog before delete
+
+@enduml 

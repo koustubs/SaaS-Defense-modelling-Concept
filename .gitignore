@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+
+# Local environments and configuration
+.venv/
+venv/
+.env
+.env.*
+!.env.example
+*.key
+*.p12
+*.pem
+*.pfx
+
+# Runtime data
+*.db
+*.sqlite
+*.sqlite3
+*.log
+runtime/
+
+# Editors and operating systems
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Build and packaging
+build/
+dist/
+*.zip

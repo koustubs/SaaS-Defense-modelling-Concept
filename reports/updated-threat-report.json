@@ -1,0 +1,677 @@
+{
+  "analyzer_version": "1.1.0",
+  "interpretation": "Observations are diagram-derived review indicators. A missing control in a diagram is not confirmation that the implementation lacks that control. Scenario ratings remain in the threat register and are not assigned to unvalidated observations.",
+  "observations": [
+    {
+      "classification": "security",
+      "evidence": [
+        {
+          "excerpt": "No failed-attempt limit or temporary lockout is shown.\nMFA is also absent from the historical diagram.",
+          "interaction_number": 10,
+          "line_number": 32,
+          "reason": "The diagram explicitly describes repeated authentication attempts without an account lockout control. This is diagram evidence only; it does not confirm the deployed implementation state.",
+          "section": "Login and repeated failures"
+        }
+      ],
+      "evidence_basis": "diagram-indicator",
+      "id": "OBS-TM-001-LOCKOUT",
+      "rule_id": "RULE-TM-001-LOCKOUT",
+      "status": "Needs validation",
+      "threat_id": "TM-001",
+      "title": "Repeated login attempts are modeled without lockout"
+    },
+    {
+      "classification": "security",
+      "evidence": [
+        {
+          "excerpt": "No failed-attempt limit or temporary lockout is shown.\nMFA is also absent from the historical diagram.",
+          "interaction_number": 10,
+          "line_number": 32,
+          "reason": "The diagram explicitly marks the authentication flow as password-only. This is diagram evidence only; it does not confirm the deployed implementation state.",
+          "section": "Login and repeated failures"
+        }
+      ],
+      "evidence_basis": "diagram-indicator",
+      "id": "OBS-TM-001-MFA",
+      "rule_id": "RULE-TM-001-MFA",
+      "status": "Needs validation",
+      "threat_id": "TM-001",
+      "title": "Password-only authentication is explicitly modeled"
+    },
+    {
+      "classification": "security",
+      "evidence": [
+        {
+          "excerpt": "Web -> Gateway: GET /api/notes without credentials",
+          "interaction_number": 2,
+          "line_number": 19,
+          "reason": "A sensitive note interaction is modeled without a connected authentication step earlier in the same section. No qualifying control appears in the rule's 'connected_section_prior' scope. Absence from this diagram is a review signal, not proof that the implementation lacks the control.",
+          "section": "Unauthenticated listing"
+        },
+        {
+          "excerpt": "Notes -> DB: Query notes without owner scope shown",
+          "interaction_number": 4,
+          "line_number": 21,
+          "reason": "A sensitive note interaction is modeled without a connected authentication step earlier in the same section. No qualifying control appears in the rule's 'connected_section_prior' scope. Absence from this diagram is a review signal, not proof that the implementation lacks the control.",
+          "section": "Unauthenticated listing"
+        },
+        {
+          "excerpt": "Gateway -> Notes: Create note",
+          "interaction_number": 13,
+          "line_number": 40,
+          "reason": "A sensitive note interaction is modeled without a connected authentication step earlier in the same section. No qualifying control appears in the rule's 'connected_section_prior' scope. Absence from this diagram is a review signal, not proof that the implementation lacks the control.",
+          "section": "Create and export"
+        },
+        {
+          "excerpt": "Web -> Gateway: GET /api/notes/export",
+          "interaction_number": 16,
+          "line_number": 46,
+          "reason": "A sensitive note interaction is modeled without a connected authentication step earlier in the same section. No qualifying control appears in the rule's 'connected_section_prior' scope. Absence from this diagram is a review signal, not proof that the implementation lacks the control.",
+          "section": "Create and export"
+        },
+        {
+          "excerpt": "Gateway -> Notes: Export request",
+          "interaction_number": 17,
+          "line_number": 47,
+          "reason": "A sensitive note interaction is modeled without a connected authentication step earlier in the same section. No qualifying control appears in the rule's 'connected_section_prior' scope. Absence from this diagram is a review signal, not proof that the implementation lacks the control.",
+          "section": "Create and export"
+        },
+        {
+          "excerpt": "User -> Web: Delete note",
+          "interaction_number": 23,
+          "line_number": 60,
+          "reason": "A sensitive note interaction is modeled without a connected authentication step earlier in the same section. No qualifying control appears in the rule's 'connected_section_prior' scope. Absence from this diagram is a review signal, not proof that the implementation lacks the control.",
+          "section": "Delete"
+        }
+      ],
+      "evidence_basis": "diagram-indicator",
+      "id": "OBS-TM-002-AUTH-CONTEXT",
+      "rule_id": "RULE-TM-002-AUTH-CONTEXT",
+      "status": "Needs validation",
+      "threat_id": "TM-002",
+      "title": "Sensitive note action has no contextual authentication step"
+    },
+    {
+      "classification": "security",
+      "evidence": [
+        {
+          "excerpt": "Web -> Gateway: POST /api/login",
+          "interaction_number": 8,
+          "line_number": 28,
+          "reason": "A state-changing browser request is modeled without a connected CSRF validation step earlier in the section. No qualifying control appears in the rule's 'connected_section_prior' scope. Absence from this diagram is a review signal, not proof that the implementation lacks the control.",
+          "section": "Login and repeated failures"
+        },
+        {
+          "excerpt": "Web -> Gateway: POST /api/notes/create",
+          "interaction_number": 12,
+          "line_number": 39,
+          "reason": "A state-changing browser request is modeled without a connected CSRF validation step earlier in the section. No qualifying control appears in the rule's 'connected_section_prior' scope. Absence from this diagram is a review signal, not proof that the implementation lacks the control.",
+          "section": "Create and export"
+        },
+        {
+          "excerpt": "Web -> Gateway: DELETE /api/notes/{id}",
+          "interaction_number": 24,
+          "line_number": 61,
+          "reason": "A state-changing browser request is modeled without a connected CSRF validation step earlier in the section. No qualifying control appears in the rule's 'connected_section_prior' scope. Absence from this diagram is a review signal, not proof that the implementation lacks the control.",
+          "section": "Delete"
+        }
+      ],
+      "evidence_basis": "diagram-indicator",
+      "id": "OBS-TM-004-CSRF",
+      "rule_id": "RULE-TM-004-CSRF",
+      "status": "Needs validation",
+      "threat_id": "TM-004",
+      "title": "State-changing browser request has no contextual CSRF check"
+    },
+    {
+      "classification": "security",
+      "evidence": [
+        {
+          "excerpt": "Notes -> DB: Query notes without owner scope shown",
+          "interaction_number": 4,
+          "line_number": 21,
+          "reason": "A note data operation is modeled without a connected ownership or user-scope check earlier in the section. No qualifying control appears in the rule's 'connected_section_prior' scope. Absence from this diagram is a review signal, not proof that the implementation lacks the control.",
+          "section": "Unauthenticated listing"
+        },
+        {
+          "excerpt": "Notes -> DB: Insert note",
+          "interaction_number": 14,
+          "line_number": 44,
+          "reason": "A note data operation is modeled without a connected ownership or user-scope check earlier in the section. No qualifying control appears in the rule's 'connected_section_prior' scope. Absence from this diagram is a review signal, not proof that the implementation lacks the control.",
+          "section": "Create and export"
+        },
+        {
+          "excerpt": "Gateway -> Notes: Export request",
+          "interaction_number": 17,
+          "line_number": 47,
+          "reason": "A note data operation is modeled without a connected ownership or user-scope check earlier in the section. No qualifying control appears in the rule's 'connected_section_prior' scope. Absence from this diagram is a review signal, not proof that the implementation lacks the control.",
+          "section": "Create and export"
+        },
+        {
+          "excerpt": "Notes -> DB: Query all notes",
+          "interaction_number": 18,
+          "line_number": 48,
+          "reason": "A note data operation is modeled without a connected ownership or user-scope check earlier in the section. No qualifying control appears in the rule's 'connected_section_prior' scope. Absence from this diagram is a review signal, not proof that the implementation lacks the control.",
+          "section": "Create and export"
+        },
+        {
+          "excerpt": "Web -> Gateway: DELETE /api/notes/{id}",
+          "interaction_number": 24,
+          "line_number": 61,
+          "reason": "A note data operation is modeled without a connected ownership or user-scope check earlier in the section. No qualifying control appears in the rule's 'connected_section_prior' scope. Absence from this diagram is a review signal, not proof that the implementation lacks the control.",
+          "section": "Delete"
+        }
+      ],
+      "evidence_basis": "diagram-indicator",
+      "id": "OBS-TM-005-OWNERSHIP",
+      "rule_id": "RULE-TM-005-OWNERSHIP",
+      "status": "Needs validation",
+      "threat_id": "TM-005",
+      "title": "Note data operation has no contextual ownership check"
+    },
+    {
+      "classification": "security",
+      "evidence": [
+        {
+          "excerpt": "Notes --> Web: Notes response",
+          "interaction_number": 6,
+          "line_number": 23,
+          "reason": "User-visible output is modeled without a connected output-encoding step in the same section. No qualifying control appears in the rule's 'connected_section' scope. Absence from this diagram is a review signal, not proof that the implementation lacks the control.",
+          "section": "Unauthenticated listing"
+        },
+        {
+          "excerpt": "DB --> User: Exported data",
+          "interaction_number": 19,
+          "line_number": 49,
+          "reason": "User-visible output is modeled without a connected output-encoding step in the same section. No qualifying control appears in the rule's 'connected_section' scope. Absence from this diagram is a review signal, not proof that the implementation lacks the control.",
+          "section": "Create and export"
+        },
+        {
+          "excerpt": "Web --> User: Display internal error",
+          "interaction_number": 22,
+          "line_number": 57,
+          "reason": "User-visible output is modeled without a connected output-encoding step in the same section. No qualifying control appears in the rule's 'connected_section' scope. Absence from this diagram is a review signal, not proof that the implementation lacks the control.",
+          "section": "Detailed error"
+        }
+      ],
+      "evidence_basis": "diagram-indicator",
+      "id": "OBS-TM-009-OUTPUT",
+      "rule_id": "RULE-TM-009-OUTPUT",
+      "status": "Needs validation",
+      "threat_id": "TM-009",
+      "title": "User-visible note output has no contextual encoding control"
+    },
+    {
+      "classification": "security",
+      "evidence": [
+        {
+          "excerpt": "DB --> Notes: Database error with sensitive field detail",
+          "interaction_number": 20,
+          "line_number": 55,
+          "reason": "The diagram explicitly includes sensitive or implementation-specific error detail. This is diagram evidence only; it does not confirm implementation state.",
+          "section": "Detailed error"
+        }
+      ],
+      "evidence_basis": "diagram-indicator",
+      "id": "OBS-TM-010-ERROR-DETAIL",
+      "rule_id": "RULE-TM-010-ERROR-DETAIL",
+      "status": "Needs validation",
+      "threat_id": "TM-010",
+      "title": "Sensitive implementation detail appears in an error flow"
+    },
+    {
+      "classification": "resilience",
+      "evidence": [
+        {
+          "excerpt": "Rate limiting and owner-scoped export are not shown.",
+          "interaction_number": 19,
+          "line_number": 50,
+          "reason": "The diagram explicitly states that an operation has no rate limiting. This is diagram evidence only; it does not confirm the deployed implementation state.",
+          "section": "Create and export"
+        }
+      ],
+      "evidence_basis": "diagram-indicator",
+      "id": "OBS-TM-014-RATE-LIMIT",
+      "rule_id": "RULE-TM-014-RATE-LIMIT",
+      "status": "Needs validation",
+      "threat_id": "TM-014",
+      "title": "Rate limiting is explicitly absent"
+    },
+    {
+      "classification": "security",
+      "evidence": [
+        {
+          "excerpt": "Input validation and audit recording are not shown.",
+          "interaction_number": 13,
+          "line_number": 41,
+          "reason": "The diagram explicitly states that a sensitive operation lacks audit logging. This is diagram evidence only; it does not confirm the deployed implementation state.",
+          "section": "Create and export"
+        }
+      ],
+      "evidence_basis": "diagram-indicator",
+      "id": "OBS-TM-017-AUDIT",
+      "rule_id": "RULE-TM-017-AUDIT",
+      "status": "Needs validation",
+      "threat_id": "TM-017",
+      "title": "Audit logging is explicitly absent"
+    }
+  ],
+  "parser_warnings": [],
+  "report_type": "plantuml-threat-analysis",
+  "risk_matrix": {
+    "High": {
+      "High": "Critical",
+      "Low": "Medium",
+      "Medium": "High"
+    },
+    "Low": {
+      "High": "Medium",
+      "Low": "Low",
+      "Medium": "Low"
+    },
+    "Medium": {
+      "High": "High",
+      "Low": "Low",
+      "Medium": "Medium"
+    }
+  },
+  "rule_schema_version": "1.0",
+  "schema_version": "1.1",
+  "source": {
+    "path": "docs/diagrams/original-insecure-flow.puml",
+    "sha256": "adcd10a8a03719ac4b659ba0e9f531b1c64d510144ec342538152211f80297ab",
+    "title": "Historical insecure notes flow represented in the 2025 evidence"
+  },
+  "summary": {
+    "by_classification": {
+      "privacy": 0,
+      "resilience": 1,
+      "security": 8,
+      "usability": 0
+    },
+    "diagram_observations": 9,
+    "register_entries": 21,
+    "warnings": 0
+  },
+  "threat_register": [
+    {
+      "affected_asset": "User credentials and accounts",
+      "classification": "security",
+      "evidence_source": "The original sequence model explicitly shows repeated failed logins and no lockout; this is design evidence, not source-code verification.",
+      "existing_control": "The historical model includes credential validation but does not establish throttling or lockout for the affected flow.",
+      "id": "TM-001",
+      "impact": "High",
+      "likelihood": "Medium",
+      "overall_severity": "High",
+      "planned_or_demonstrated_control": "Generic authentication failures, per-account and per-client throttling, temporary lockout, and strong password hashing.",
+      "preconditions": "A valid account identifier is known or guessed and password authentication is reachable.",
+      "residual_risk": "Distributed low-rate attempts and reuse of passwords compromised elsewhere remain possible.",
+      "scenario": "An internet attacker uses credential stuffing or repeated password guesses to take over an account.",
+      "status": "Partially demonstrated",
+      "stride_category": "Spoofing",
+      "trust_boundary": "Browser to application and authentication/session boundary",
+      "validation_method": "Automated login-failure, rate-limit, lockout, and generic-response tests."
+    },
+    {
+      "affected_asset": "Session-protected notes and user identity",
+      "classification": "security",
+      "evidence_source": "The original insecure model includes an unauthenticated notes request; absence of a check in a diagram is not proof of an implementation defect.",
+      "existing_control": "Token validation is modeled for sync but not consistently for every notes flow.",
+      "id": "TM-002",
+      "impact": "High",
+      "likelihood": "Low",
+      "overall_severity": "Medium",
+      "planned_or_demonstrated_control": "Central server-side session validation on every protected route with fail-closed behavior.",
+      "preconditions": "A protected route omits or incorrectly performs server-side session validation.",
+      "residual_risk": "Authentication middleware defects or accidentally unprotected future routes remain possible.",
+      "scenario": "A caller reaches a protected note operation without a valid authenticated session.",
+      "status": "Demonstrated",
+      "stride_category": "Spoofing",
+      "trust_boundary": "Authentication/session boundary",
+      "validation_method": "Unauthenticated access tests for each protected route and route-inventory review."
+    },
+    {
+      "affected_asset": "Opaque session tokens",
+      "classification": "security",
+      "evidence_source": "The historical model returns and stores an auth token without documenting storage, rotation, expiry, or revocation properties.",
+      "existing_control": "The diagram names an auth token but does not establish secure lifecycle controls.",
+      "id": "TM-003",
+      "impact": "High",
+      "likelihood": "Low",
+      "overall_severity": "Medium",
+      "planned_or_demonstrated_control": "Opaque random tokens, server-side token hashes, secure cookie attributes, rotation, idle and absolute expiry, and logout revocation.",
+      "preconditions": "An attacker obtains a token or the application fails to rotate, expire, or revoke it.",
+      "residual_risk": "A token stolen from a compromised browser remains usable until detected, revoked, or expired.",
+      "scenario": "A stolen, fixed, replayed, or non-revoked session token is used to impersonate a user.",
+      "status": "Demonstrated",
+      "stride_category": "Spoofing",
+      "trust_boundary": "Browser to application and authentication/session boundary",
+      "validation_method": "Session creation, rotation, idle and absolute expiry, and logout-revocation tests."
+    },
+    {
+      "affected_asset": "Notes, account state, and session state",
+      "classification": "security",
+      "evidence_source": "The original sequence model contains browser POST and DELETE requests but does not model CSRF validation; this is a review gap, not confirmation.",
+      "existing_control": "No anti-CSRF property is established by the historical diagram.",
+      "id": "TM-004",
+      "impact": "High",
+      "likelihood": "Low",
+      "overall_severity": "Medium",
+      "planned_or_demonstrated_control": "Cryptographically random session-bound CSRF tokens validated on every state-changing browser request.",
+      "preconditions": "Cookie-authenticated state-changing endpoints accept requests without a valid anti-CSRF token.",
+      "residual_risk": "Cross-site scripting or a compromised browser can bypass token-based CSRF protection.",
+      "scenario": "A malicious site causes an authenticated browser to submit an unwanted state-changing request.",
+      "status": "Demonstrated",
+      "stride_category": "Tampering",
+      "trust_boundary": "Browser to application",
+      "validation_method": "Missing and invalid CSRF-token rejection tests plus valid-token state-changing request tests."
+    },
+    {
+      "affected_asset": "Other users' note titles, bodies, and exports",
+      "classification": "security",
+      "evidence_source": "The insecure historical model queries all notes and does not model object ownership checks.",
+      "existing_control": "No object-level authorization is established in the original insecure sequence.",
+      "id": "TM-005",
+      "impact": "High",
+      "likelihood": "Low",
+      "overall_severity": "Medium",
+      "planned_or_demonstrated_control": "Owner-scoped database queries for every read, update, delete, list, and export operation.",
+      "preconditions": "A data query uses a public note ID without also constraining the authenticated owner ID.",
+      "residual_risk": "Authorization regressions in new query paths remain a high-consequence risk.",
+      "scenario": "A malicious authenticated user changes a note identifier or export request to read or modify another user's data.",
+      "status": "Demonstrated",
+      "stride_category": "Information Disclosure",
+      "trust_boundary": "Authenticated user to application and application to database",
+      "validation_method": "Cross-user read, update, delete, and export denial tests."
+    },
+    {
+      "affected_asset": "Administrator privileges and user administration",
+      "classification": "security",
+      "evidence_source": "The original model includes administrator actions without showing role enforcement at each action.",
+      "existing_control": "An Admin actor is named, but actor naming alone is not an authorization control.",
+      "id": "TM-006",
+      "impact": "High",
+      "likelihood": "Low",
+      "overall_severity": "Medium",
+      "planned_or_demonstrated_control": "Server-side role checks on all administrative routes with denied-access audit events.",
+      "preconditions": "An administrative route trusts client state or omits a server-side role check.",
+      "residual_risk": "Compromise of a legitimate administrator account still grants intended administrative authority.",
+      "scenario": "A normal user invokes an administrative operation or changes effective role state.",
+      "status": "Demonstrated",
+      "stride_category": "Elevation of Privilege",
+      "trust_boundary": "Normal-user to administrative functions",
+      "validation_method": "Normal-user denial and intended-admin success tests."
+    },
+    {
+      "affected_asset": "Browser sessions and rendered note content",
+      "classification": "security",
+      "evidence_source": "The historical model notes missing input validation but does not establish an exploitable rendering path.",
+      "existing_control": "No output-rendering guarantee can be inferred from the sequence model.",
+      "id": "TM-007",
+      "impact": "High",
+      "likelihood": "Low",
+      "overall_severity": "Medium",
+      "planned_or_demonstrated_control": "Template autoescaping, text-only rendering, a restrictive content security policy, and no unsafe HTML insertion.",
+      "preconditions": "Untrusted text reaches an HTML execution context without context-appropriate escaping.",
+      "residual_risk": "Future rich-text features or unsafe template changes could introduce execution contexts.",
+      "scenario": "Attacker-controlled note content executes script when stored or reflected into a page.",
+      "status": "Demonstrated",
+      "stride_category": "Tampering",
+      "trust_boundary": "Browser to application and application to browser",
+      "validation_method": "Stored XSS-shaped payload rendering tests plus template review."
+    },
+    {
+      "affected_asset": "Database records and authentication data",
+      "classification": "security",
+      "evidence_source": "The historical sequence model does not contain source-level database query evidence, so implementation status requires code review and tests.",
+      "existing_control": "No source implementation is assessed by the diagram analyzer.",
+      "id": "TM-008",
+      "impact": "High",
+      "likelihood": "Low",
+      "overall_severity": "Medium",
+      "planned_or_demonstrated_control": "Parameterized ORM queries, constrained raw-SQL use, and treatment of SQL-shaped strings as ordinary note data.",
+      "preconditions": "Application input is concatenated into SQL or an unsafe raw query.",
+      "residual_risk": "Future hand-written queries or unsafe migration tooling can reintroduce injection paths.",
+      "scenario": "SQL-shaped attacker input changes a database query rather than being treated as data.",
+      "status": "Demonstrated",
+      "stride_category": "Tampering",
+      "trust_boundary": "Application to database",
+      "validation_method": "SQL-injection-shaped input tests and static review for query construction."
+    },
+    {
+      "affected_asset": "Note content and browser security context",
+      "classification": "security",
+      "evidence_source": "The original flow displays notes but does not document output encoding; diagram absence is only a review signal.",
+      "existing_control": "No output-encoding property is established by the historical sequence diagram.",
+      "id": "TM-009",
+      "impact": "Medium",
+      "likelihood": "Low",
+      "overall_severity": "Low",
+      "planned_or_demonstrated_control": "Context-appropriate escaping in HTML reports, templates, and exports with no direct untrusted HTML interpolation.",
+      "preconditions": "A renderer treats untrusted text as markup or fails to encode for the destination context.",
+      "residual_risk": "New output formats require their own encoding and formula-injection analysis.",
+      "scenario": "Attacker-controlled output is inserted into HTML, CSV, or another active context without safe encoding.",
+      "status": "Demonstrated",
+      "stride_category": "Information Disclosure",
+      "trust_boundary": "Application to browser and export boundary",
+      "validation_method": "Malicious report-field and note-output escaping tests."
+    },
+    {
+      "affected_asset": "Credentials, internal schema, and implementation details",
+      "classification": "security",
+      "evidence_source": "The original insecure model explicitly returns an error naming a password field and labels it sensitive.",
+      "existing_control": "The historical insecure flow demonstrates the disclosure rather than a mitigation.",
+      "id": "TM-010",
+      "impact": "Medium",
+      "likelihood": "Low",
+      "overall_severity": "Low",
+      "planned_or_demonstrated_control": "Generic external errors with correlation IDs and separately protected internal diagnostic logging.",
+      "preconditions": "An attacker can trigger a failure whose internal detail is returned externally.",
+      "residual_risk": "Operational logs can still disclose sensitive context if log fields are not curated.",
+      "scenario": "An error response exposes secrets, database detail, stack traces, or sensitive field names.",
+      "status": "Demonstrated",
+      "stride_category": "Information Disclosure",
+      "trust_boundary": "Application to browser",
+      "validation_method": "Failure-path tests that reject stack traces, SQL detail, and sensitive values in responses."
+    },
+    {
+      "affected_asset": "Passwords, note bodies, keys, CSRF values, and session tokens",
+      "classification": "security",
+      "evidence_source": "The archive models security logging but does not prove field-level redaction or a runnable external adapter.",
+      "existing_control": "Historical logging concepts do not establish what data is logged.",
+      "id": "TM-011",
+      "impact": "High",
+      "likelihood": "Low",
+      "overall_severity": "Medium",
+      "planned_or_demonstrated_control": "Structured allow-listed audit fields that exclude passwords, note bodies, keys, tokens, and CSRF values.",
+      "preconditions": "Logging captures raw requests, secrets, note content, or exception context without redaction.",
+      "residual_risk": "Unexpected exception text or future fields can bypass an incomplete redaction policy.",
+      "scenario": "Sensitive values are written to application or audit logs and exposed to operators or log systems.",
+      "status": "Demonstrated",
+      "stride_category": "Information Disclosure",
+      "trust_boundary": "Application to monitoring or notification adapter",
+      "validation_method": "Audit-record content tests and logging-field review."
+    },
+    {
+      "affected_asset": "Encrypted notes, password hashes, user identifiers, and audit records",
+      "classification": "security",
+      "evidence_source": "Database compromise is an explicit repository threat-model assumption; the sequence diagram alone cannot validate storage controls.",
+      "existing_control": "The historical notes database is named but its at-rest protection is not established.",
+      "id": "TM-012",
+      "impact": "High",
+      "likelihood": "Low",
+      "overall_severity": "Medium",
+      "planned_or_demonstrated_control": "Authenticated encryption for note titles and bodies, hardened password hashes, and restricted database-file access.",
+      "preconditions": "The database file, backup, or storage volume is copied or exposed.",
+      "residual_risk": "Metadata, audit records, and password hashes remain exposed; offline password guessing remains possible.",
+      "scenario": "An attacker with database-file access reads sensitive stored data or alters security state.",
+      "status": "Partially demonstrated",
+      "stride_category": "Information Disclosure",
+      "trust_boundary": "Application to database",
+      "validation_method": "SQLite plaintext-absence and cryptographic tests plus documented deployment file-custody review."
+    },
+    {
+      "affected_asset": "Note-encryption master key and decrypted note content",
+      "classification": "security",
+      "evidence_source": "The compact reference scope requires an environment-provided key and explicitly excludes production KMS or HSM integration.",
+      "existing_control": "No production key-management integration is claimed.",
+      "id": "TM-013",
+      "impact": "High",
+      "likelihood": "Low",
+      "overall_severity": "Medium",
+      "planned_or_demonstrated_control": "A 32-byte environment-provided key, AES-GCM with unique nonces and associated data, plus key-version metadata.",
+      "preconditions": "Runtime environment configuration, deployment secrets, or host memory is compromised.",
+      "residual_risk": "Host or environment compromise exposes the active key; rotation is operational rather than automated.",
+      "scenario": "An attacker obtains or replaces the encryption key and decrypts or corrupts stored notes.",
+      "status": "Partially demonstrated",
+      "stride_category": "Information Disclosure",
+      "trust_boundary": "Application to encryption-key source",
+      "validation_method": "Configuration validation, nonce/associated-data tests, and documented production key-management review."
+    },
+    {
+      "affected_asset": "Application availability and authentication capacity",
+      "classification": "resilience",
+      "evidence_source": "The historical model explicitly labels an export flow as lacking rate limiting.",
+      "existing_control": "No distributed infrastructure is present; the original insecure flow documents missing throttling.",
+      "id": "TM-014",
+      "impact": "Medium",
+      "likelihood": "Medium",
+      "overall_severity": "Medium",
+      "planned_or_demonstrated_control": "Login-specific per-account and per-client throttles, bounded request bodies, and per-user note quotas in one process.",
+      "preconditions": "An attacker can make sustained requests and controls are absent or only single-keyed.",
+      "residual_risk": "Database-backed throttle state persists, but check/update serialization is process-local and is not a distributed or edge rate limiter.",
+      "scenario": "Repeated requests consume CPU, database connections, or endpoint capacity until legitimate work is delayed.",
+      "status": "Partially demonstrated",
+      "stride_category": "Denial of Service",
+      "trust_boundary": "Browser to application",
+      "validation_method": "Login-throttle burst and concurrency tests plus production design review for distributed limiting."
+    },
+    {
+      "affected_asset": "Application memory, request workers, and storage",
+      "classification": "resilience",
+      "evidence_source": "Large-body behavior is in the modern threat scope but is not represented by the historical sequence diagram.",
+      "existing_control": "No request-body limit can be inferred from diagram evidence.",
+      "id": "TM-015",
+      "impact": "Medium",
+      "likelihood": "Low",
+      "overall_severity": "Low",
+      "planned_or_demonstrated_control": "Reject requests above a documented maximum before expensive parsing or database work.",
+      "preconditions": "The HTTP stack or application accepts bodies larger than the intended note limits.",
+      "residual_risk": "Upstream servers may buffer bodies before application code sees them.",
+      "scenario": "An attacker sends an oversized request body that consumes memory, parsing time, or storage.",
+      "status": "Demonstrated",
+      "stride_category": "Denial of Service",
+      "trust_boundary": "Browser to application",
+      "validation_method": "Maximum and oversized request-body tests plus deployment proxy configuration review."
+    },
+    {
+      "affected_asset": "Per-user note storage and database capacity",
+      "classification": "resilience",
+      "evidence_source": "The original flow creates notes without documenting a quota; absence in a sequence diagram is not confirmation.",
+      "existing_control": "No quota property is established by the historical sequence model.",
+      "id": "TM-016",
+      "impact": "Medium",
+      "likelihood": "Medium",
+      "overall_severity": "Medium",
+      "planned_or_demonstrated_control": "Title/body length limits, a per-user note-count quota, bounded pagination, and user-scoped exports.",
+      "preconditions": "An authenticated user can create notes without count, length, or storage constraints.",
+      "residual_risk": "Many accounts can collectively consume storage; the count quota is application-level and is not a database-enforced atomic quota across multiple workers.",
+      "scenario": "A user creates excessive notes or large cumulative content to exhaust storage and degrade queries.",
+      "status": "Demonstrated",
+      "stride_category": "Denial of Service",
+      "trust_boundary": "Authenticated user to application and application to database",
+      "validation_method": "Boundary-length, per-user quota, pagination, and export-scope tests."
+    },
+    {
+      "affected_asset": "Audit records and accountability for sensitive actions",
+      "classification": "security",
+      "evidence_source": "The historical insecure model explicitly labels note creation as having no audit logging.",
+      "existing_control": "Some historical diagrams mention security logs, but the insecure notes flow explicitly lacks an audit event.",
+      "id": "TM-017",
+      "impact": "Medium",
+      "likelihood": "Low",
+      "overall_severity": "Low",
+      "planned_or_demonstrated_control": "Structured records for authentication, logout, note changes, export, and denied admin access without sensitive payloads.",
+      "preconditions": "Authentication or note operations are not recorded with actor, action, outcome, and correlation context.",
+      "residual_risk": "Local audit records can be altered by a host or database administrator and are not an external immutable log.",
+      "scenario": "A user or administrator denies a sensitive action and the operator lacks a trustworthy event record.",
+      "status": "Demonstrated",
+      "stride_category": "Repudiation",
+      "trust_boundary": "Application to database or audit adapter",
+      "validation_method": "Action-to-audit tests and inspection that forbidden secret fields are absent."
+    },
+    {
+      "affected_asset": "Administrator privileges, user data, and audit visibility",
+      "classification": "security",
+      "evidence_source": "The historical architecture includes an Admin actor with provisioning and security-tool actions but no least-privilege analysis.",
+      "existing_control": "A distinct Admin actor is modeled; this does not prove least privilege or monitoring.",
+      "id": "TM-018",
+      "impact": "Low",
+      "likelihood": "Low",
+      "overall_severity": "Low",
+      "planned_or_demonstrated_control": "Narrow server-side RBAC, explicit administrative routes, and audit events for access and denials.",
+      "preconditions": "An administrator account is compromised or administrative authority is too broad and weakly monitored.",
+      "residual_risk": "The demonstration has a simple role model and does not implement approval workflows or privileged-access management.",
+      "scenario": "A legitimate or compromised administrator performs excessive access or destructive actions beyond operational need.",
+      "status": "Partially demonstrated",
+      "stride_category": "Elevation of Privilege",
+      "trust_boundary": "Normal-user to administrative functions and operator boundary",
+      "validation_method": "Admin authorization tests, denied-access audit tests, and manual least-privilege review."
+    },
+    {
+      "affected_asset": "Application configuration, cookie policy, debug state, and secrets",
+      "classification": "security",
+      "evidence_source": "Deployment configuration is not represented by the historical sequence model and must be assessed in code and runtime settings.",
+      "existing_control": "The analyzer makes no claim about deployment configuration state.",
+      "id": "TM-019",
+      "impact": "High",
+      "likelihood": "Low",
+      "overall_severity": "Medium",
+      "planned_or_demonstrated_control": "Fail-fast configuration validation, Secure cookies in test and production modes, rejection of non-loopback development or test bindings, no committed real key, and debug disabled.",
+      "preconditions": "Deployment accepts missing, malformed, or unsafe environment settings.",
+      "residual_risk": "Operators can still select unsafe settings or expose environment configuration at the host layer.",
+      "scenario": "Unsafe configuration enables debug disclosure, insecure cookies, weak limits, or accidental use of development secrets.",
+      "status": "Partially demonstrated",
+      "stride_category": "Elevation of Privilege",
+      "trust_boundary": "Development/testing environment to deployed runtime",
+      "validation_method": "Master-key rejection and production-cookie tests plus deployment checklist review."
+    },
+    {
+      "affected_asset": "Application source, dependencies, build inputs, and runtime integrity",
+      "classification": "security",
+      "evidence_source": "Supply-chain risk is part of the modern repository scope and is not asserted as a historical finding.",
+      "existing_control": "No production build or dependency-monitoring system is claimed by this portfolio demonstration.",
+      "id": "TM-020",
+      "impact": "High",
+      "likelihood": "Low",
+      "overall_severity": "Medium",
+      "planned_or_demonstrated_control": "A bounded dependency list, review of updates, and optional vulnerability scanning when available.",
+      "preconditions": "A trusted package, source input, or build environment is compromised or insufficiently reviewed.",
+      "residual_risk": "A trusted upstream release or developer environment can still be compromised.",
+      "scenario": "A compromised dependency or build input executes malicious code or alters security behavior.",
+      "status": "Planned",
+      "stride_category": "Tampering",
+      "trust_boundary": "Development/testing environment to deployed runtime",
+      "validation_method": "Dependency inventory, lock/declaration review, and recorded scanner execution when tools are available."
+    },
+    {
+      "affected_asset": "Note content, exports, identifiers, profile data, and audit records",
+      "classification": "privacy",
+      "evidence_source": "The archive contains cleanup and export concepts but does not establish a retention policy or verified deletion semantics.",
+      "existing_control": "A timed cleanup participant exists historically, but its policy and implementation are not verified.",
+      "id": "TM-021",
+      "impact": "Medium",
+      "likelihood": "Medium",
+      "overall_severity": "Medium",
+      "planned_or_demonstrated_control": "User-scoped export and deletion behavior, data minimization, and an explicit production retention decision outside the demo scope.",
+      "preconditions": "Retention rules are undefined, deletion is incomplete, or exports include data beyond the requesting user's scope.",
+      "residual_risk": "Backups, audit retention, and legal deletion requirements are not implemented by the compact local demonstration.",
+      "scenario": "Personal data is retained longer than intended, included unnecessarily in exports or logs, or not deleted consistently.",
+      "status": "Partially demonstrated",
+      "stride_category": "Information Disclosure",
+      "trust_boundary": "Application to database and user-scoped export boundary",
+      "validation_method": "User-scoped export tests, deletion tests, and documented retention-policy review."
+    }
+  ],
+  "threat_register_schema_version": "1.0"
+}

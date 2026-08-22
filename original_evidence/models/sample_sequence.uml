@@ -1,0 +1,91 @@
+@startuml
+title SaaS Notes App - Threat Intelligence Oriented Sequence Diagram
+
+actor "User\n(Web / Android)" as User
+participant "Auth Service\n(OAuth2 + JWT)" as Auth
+participant "User DB\n(Encrypted PII)" as UserDB
+participant "Notes Service\n(CRUD + RBAC)" as Notes
+participant "Notes DB" as NotesDB
+participant "Sync Service\n(Realtime Sync)" as Sync
+participant "CleanDB\n(Timed Cleanup)" as Cleaner
+participant "Vulnerability Scanner\n(OWASP ZAP)" as ZAP
+participant "Kafka Topic\n(Security Logs)" as Kafka
+participant "Monitoring / Reporting SaaS\n(OWASP / SIEM)" as Monitor
+participant "TI Feed\n(MISP / TAXII)" as TI
+participant "Notification Service\n(Alert Trigger)" as Notify
+actor "Admin" as Admin
+
+== 1. Login ==
+User -> Auth : Login Request
+Auth -> UserDB : Validate Credentials
+UserDB --> Auth : Return: Auth Success / Failure
+alt [Login Failed]
+  Auth -> Notify : Send Login Notification
+  Notify -> User : Alert (Login Failed)
+end
+Auth -> User : JWT Token
+
+== 2. Notes CRUD ==
+User -> Notes : Create/Edit/Delete Note
+Notes -> NotesDB : Store / Update
+NotesDB --> Notes : DB Success
+Notes --> User : Note Saved
+
+alt [Sync Notes]
+  User -> Sync : Trigger Sync
+  Sync -> NotesDB : Fetch Notes
+  NotesDB --> Sync : Return: Synced Notes
+  Sync --> User : Notes Updated
+
+  alt [Sync Failed]
+    Sync -> Kafka : Log Sync Failure
+    Kafka -> Monitor : Stream Sync Error
+    Monitor -> Sync : Retry / Escalate Internally
+    Sync --> User : Notification: Sync Delayed
+  end
+end
+
+alt [Scheduled Cleanup]
+  Cleaner -> NotesDB : Timed Data Purge
+end
+
+== 3. Threat Scanning ==
+opt [Scan After Note Update]
+  Notes -> ZAP : Send Notes for Scan
+  activate ZAP
+  ZAP -> Kafka : Log Findings
+  activate Kafka
+  Kafka -> Monitor : Stream Logs
+  activate Monitor
+
+  alt [Issue Found]
+    ZAP -> Notes : Cleaned/Filtered Notes
+    Notes -> NotesDB : Store Sanitized Notes
+    Monitor -> TI : IOC Match Check
+    TI --> Monitor : IOC Match / Threat Found
+    Monitor -> Notify : Raise Alert
+    Monitor -> User : Alert User
+  else [Clean]
+    ZAP -> Notes : Forward Scanned Notes
+    Notes -> NotesDB : Store Notes
+  end
+
+  deactivate ZAP
+  deactivate Kafka
+  deactivate Monitor
+end
+
+== 4. Threat Intelligence Feed ==
+Admin -> TI : Fetch New IOC / Feeds
+TI --> Monitor : Updated Rules / Feeds
+Monitor -> ZAP : Apply Rules for Next Scan
+
+== 5. Administrator Activities ==
+Admin -> Notes : Provision User
+Admin -> Monitor : Review Alerts
+Admin -> ZAP : Trigger Manual Scan
+
+== 6. Alerting ==
+Notify -> UserDB : Get Contact Info
+Notify -> User : Alert (In-App Notification)
+@enduml

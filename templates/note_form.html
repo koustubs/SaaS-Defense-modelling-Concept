@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}{{ heading }} · Secure Notes{% endblock %}
+{% block content %}
+<section class="card" aria-labelledby="form-heading">
+  <h1 id="form-heading">{{ heading }}</h1>
+  {% if error %}<p class="alert" role="alert">{{ error }}</p>{% endif %}
+  <form method="post" action="{{ action }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+    <label for="title">Title</label>
+    <input id="title" name="title" type="text" maxlength="{{ limits.max_title_chars }}" value="{{ note.title if note else '' }}" required>
+    <label for="body">Body</label>
+    <textarea id="body" name="body" rows="14" maxlength="{{ limits.max_note_chars }}">{{ note.body if note else '' }}</textarea>
+    <div class="actions">
+      <button type="submit">Save note</button>
+      <a href="{{ '/notes/' ~ note.public_id if note and note.public_id else '/notes' }}">Cancel</a>
+    </div>
+  </form>
+</section>
+{% endblock %}

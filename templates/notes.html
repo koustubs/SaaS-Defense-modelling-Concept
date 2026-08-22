@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Your notes · Secure Notes{% endblock %}
+{% block content %}
+<div class="page-heading">
+  <div>
+    <h1>Your notes</h1>
+    <p class="muted">{{ total }} stored note{% if total != 1 %}s{% endif %}</p>
+  </div>
+  <a class="button" href="/notes/new">New note</a>
+</div>
+{% if notes %}
+  <ul class="note-list">
+  {% for note in notes %}
+    <li class="card">
+      <h2><a href="/notes/{{ note.public_id }}">{{ note.title }}</a></h2>
+      <p class="muted">Updated <time datetime="{{ note.updated_at.isoformat() }}Z">{{ note.updated_at.strftime('%Y-%m-%d %H:%M UTC') }}</time></p>
+    </li>
+  {% endfor %}
+  </ul>
+  <nav class="pagination" aria-label="Note pages">
+    {% if page > 1 %}<a href="/notes?page={{ page - 1 }}">Previous</a>{% endif %}
+    <span>Page {{ page }} of {{ max_page }}</span>
+    {% if page < max_page %}<a href="/notes?page={{ page + 1 }}">Next</a>{% endif %}
+  </nav>
+{% else %}
+  <section class="card empty-state">
+    <h2>No notes yet</h2>
+    <p>Create a note to exercise encrypted storage and owner-scoped access.</p>
+  </section>
+{% endif %}
+{% endblock %}

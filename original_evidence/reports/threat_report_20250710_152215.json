@@ -1,0 +1,330 @@
+{
+  "report_metadata": {
+    "generated_at": "2025-07-10T15:22:15.268370",
+    "total_findings": 9,
+    "report_type": "Threat Analysis Report with DREAD Scoring"
+  },
+  "dread_summary": {
+    "total_findings": 9,
+    "severity_distribution": {
+      "Critical": 2,
+      "High": 4,
+      "Medium": 2,
+      "Low": 1
+    },
+    "average_weighted_dread": 6.18,
+    "average_normal_dread": 6.13,
+    "max_weighted_dread": 7.27,
+    "min_weighted_dread": 3.91,
+    "max_normal_dread": 7.4,
+    "min_normal_dread": 4.0
+  },
+  "findings": [
+    {
+      "id": "TF-SD-003",
+      "title": "Resource exhaustion through unlimited operations",
+      "source": "Sequence Diagram",
+      "description": "The diagram shows API call 'GET /api/notes (no auth header)' without rate limiting from 'WC', API call 'Forward request' without rate limiting from 'AG'.",
+      "impact": "Denial of Service, System resources can be exhausted",
+      "likelihood": "High",
+      "severity": "Critical",
+      "mitigation": "Implement resource limits and quotas",
+      "status": "Open",
+      "last_updated": "2025-07-10",
+      "rule_id": "STRIDE-D-002",
+      "category": "Denial of Service",
+      "matched_pattern": "Resource exhaustion through unlimited operations",
+      "evidence": [
+        "API call 'GET /api/notes (no auth header)' without rate limiting from 'WC'",
+        "API call 'Forward request' without rate limiting from 'AG'",
+        "API call 'POST /api/login' without rate limiting from 'WC'",
+        "API call 'POST /api/notes/sync (with token)' without rate limiting from 'WC'",
+        "API call 'Process sync request' without rate limiting from 'AG'",
+        "API call 'POST /api/notes/create' without rate limiting from 'WC'",
+        "API call 'GET /api/notes/export' without rate limiting from 'WC'",
+        "API call 'Export request' without rate limiting from 'AG'",
+        "API call 'POST /api/notes/create' without rate limiting from 'WC'",
+        "API call 'Process request' without rate limiting from 'AG'",
+        "API call 'POST /api/login' without rate limiting from 'WC'",
+        "API call 'POST /api/login (wrong password)' without rate limiting from 'WC'",
+        "API call 'POST /api/login (new device)' without rate limiting from 'WC'",
+        "API call 'DELETE /api/notes/{id}' without rate limiting from 'WC'"
+      ],
+      "dread_score": {
+        "damage": 8,
+        "reproducibility": 8,
+        "exploitability": 7,
+        "affected_users": 8,
+        "discoverability": 5,
+        "weighted_dread": 7.27,
+        "normal_dread": 7.2,
+        "severity_level": "Critical",
+        "rank": 1
+      }
+    },
+    {
+      "id": "TF-SD-004",
+      "title": "User can access admin functions without proper authorization",
+      "source": "Sequence Diagram",
+      "description": "The diagram shows Admin action 'Export all notes' without privilege check from 'U', Admin action 'GET /api/notes/export' without privilege check from 'WC'.",
+      "impact": "Elevation of Privilege, Unauthorized access to administrative functions",
+      "likelihood": "High",
+      "severity": "Critical",
+      "mitigation": "Implement proper role-based access control (RBAC)",
+      "status": "Open",
+      "last_updated": "2025-07-10",
+      "rule_id": "STRIDE-E-001",
+      "category": "Elevation of Privilege",
+      "matched_pattern": "User can access admin functions without proper authorization",
+      "evidence": [
+        "Admin action 'Export all notes' without privilege check from 'U'",
+        "Admin action 'GET /api/notes/export' without privilege check from 'WC'",
+        "Admin action 'Export request' without privilege check from 'AG'",
+        "Admin action 'Delete note' without privilege check from 'U'",
+        "Admin action 'DELETE /api/notes/{id}' without privilege check from 'WC'",
+        "Admin action 'Export file' without privilege check from 'NS'",
+        "Admin action 'Export file' without privilege check from 'AG'"
+      ],
+      "dread_score": {
+        "damage": 9,
+        "reproducibility": 7,
+        "exploitability": 6,
+        "affected_users": 8,
+        "discoverability": 5,
+        "weighted_dread": 7.27,
+        "normal_dread": 7.0,
+        "severity_level": "Critical",
+        "rank": 2
+      }
+    },
+    {
+      "id": "TF-SD-002",
+      "title": "No rate limiting on API endpoints",
+      "source": "Sequence Diagram",
+      "description": "The diagram shows API call 'GET /api/notes (no auth header)' without rate limiting from 'WC', API call 'Forward request' without rate limiting from 'AG'.",
+      "impact": "Denial of Service, System can be overwhelmed by excessive requests",
+      "likelihood": "High",
+      "severity": "High",
+      "mitigation": "Implement rate limiting and request throttling",
+      "status": "Open",
+      "last_updated": "2025-07-10",
+      "rule_id": "STRIDE-D-001",
+      "category": "Denial of Service",
+      "matched_pattern": "No rate limiting on API endpoints",
+      "evidence": [
+        "API call 'GET /api/notes (no auth header)' without rate limiting from 'WC'",
+        "API call 'Forward request' without rate limiting from 'AG'",
+        "API call 'POST /api/login' without rate limiting from 'WC'",
+        "API call 'POST /api/notes/sync (with token)' without rate limiting from 'WC'",
+        "API call 'Process sync request' without rate limiting from 'AG'",
+        "API call 'POST /api/notes/create' without rate limiting from 'WC'",
+        "API call 'GET /api/notes/export' without rate limiting from 'WC'",
+        "API call 'Export request' without rate limiting from 'AG'",
+        "API call 'POST /api/notes/create' without rate limiting from 'WC'",
+        "API call 'Process request' without rate limiting from 'AG'",
+        "API call 'POST /api/login' without rate limiting from 'WC'",
+        "API call 'POST /api/login (wrong password)' without rate limiting from 'WC'",
+        "API call 'POST /api/login (new device)' without rate limiting from 'WC'",
+        "API call 'DELETE /api/notes/{id}' without rate limiting from 'WC'"
+      ],
+      "dread_score": {
+        "damage": 7,
+        "reproducibility": 9,
+        "exploitability": 8,
+        "affected_users": 7,
+        "discoverability": 6,
+        "weighted_dread": 7.18,
+        "normal_dread": 7.4,
+        "severity_level": "High",
+        "rank": 3
+      }
+    },
+    {
+      "id": "TF-SD-005",
+      "title": "Session management without proper timeout",
+      "source": "Sequence Diagram",
+      "description": "The diagram shows Sensitive action 'GET /api/notes (no auth header)' without audit logging from 'WC', Sensitive action 'POST /api/login' without audit logging from 'WC'.",
+      "impact": "Elevation of Privilege, Session hijacking and unauthorized access",
+      "likelihood": "High",
+      "severity": "High",
+      "mitigation": "Implement session timeouts and secure session management",
+      "status": "Open",
+      "last_updated": "2025-07-10",
+      "rule_id": "STRIDE-E-002",
+      "category": "Elevation of Privilege",
+      "matched_pattern": "Session management without proper timeout",
+      "evidence": [
+        "Sensitive action 'GET /api/notes (no auth header)' without audit logging from 'WC'",
+        "Sensitive action 'POST /api/login' without audit logging from 'WC'",
+        "Sensitive action 'Login (no 2FA)' without audit logging from 'U'",
+        "Sensitive action 'POST /api/login' without audit logging from 'WC'",
+        "Sensitive action 'Multiple failed logins' without audit logging from 'U'",
+        "Sensitive action 'POST /api/login (wrong password)' without audit logging from 'WC'",
+        "Sensitive action 'Login from new device' without audit logging from 'U'",
+        "Sensitive action 'POST /api/login (new device)' without audit logging from 'WC'",
+        "Sensitive action 'Return auth token' without audit logging from 'AS'",
+        "Sensitive action 'Return auth token' without audit logging from 'AG'",
+        "Sensitive action 'Return auth token' without audit logging from 'AS'",
+        "Sensitive action 'Return auth token' without audit logging from 'AG'",
+        "Sensitive action 'Return auth token' without audit logging from 'AS'",
+        "Sensitive action 'Return auth token' without audit logging from 'AG'"
+      ],
+      "dread_score": {
+        "damage": 8,
+        "reproducibility": 7,
+        "exploitability": 6,
+        "affected_users": 7,
+        "discoverability": 4,
+        "weighted_dread": 6.55,
+        "normal_dread": 6.4,
+        "severity_level": "High",
+        "rank": 4
+      }
+    },
+    {
+      "id": "TF-SD-001",
+      "title": "Sensitive data exposed in error messages",
+      "source": "Sequence Diagram",
+      "description": "The diagram shows Potential sensitive data in error message: 'Error: \"Password field contains invalid characters\"'.",
+      "impact": "Information Disclosure, Sensitive data leaked through error messages",
+      "likelihood": "Medium",
+      "severity": "High",
+      "mitigation": "Sanitize error messages and implement proper error handling",
+      "status": "Open",
+      "last_updated": "2025-07-10",
+      "rule_id": "STRIDE-I-001",
+      "category": "Information Disclosure",
+      "matched_pattern": "Sensitive data exposed in error messages",
+      "evidence": [
+        "Potential sensitive data in error message: 'Error: \"Password field contains invalid characters\"'"
+      ],
+      "dread_score": {
+        "damage": 7,
+        "reproducibility": 6,
+        "exploitability": 5,
+        "affected_users": 7,
+        "discoverability": 4,
+        "weighted_dread": 6.0,
+        "normal_dread": 5.8,
+        "severity_level": "High",
+        "rank": 5
+      }
+    },
+    {
+      "id": "TF-SD-006",
+      "title": "No multi-factor authentication (MFA) option",
+      "source": "Sequence Diagram",
+      "description": "The diagram shows Login flow does not mention MFA/OTP..",
+      "impact": "Authentication, Authentication, Accounts are more vulnerable to compromise",
+      "likelihood": "Medium",
+      "severity": "High",
+      "mitigation": "Offer MFA for all users",
+      "status": "Open",
+      "last_updated": "2025-07-10",
+      "rule_id": "SAAS-NOTES-008",
+      "category": "Authentication",
+      "matched_pattern": "No multi-factor authentication (MFA) option",
+      "evidence": [
+        "Login flow does not mention MFA/OTP."
+      ],
+      "dread_score": {
+        "damage": 7,
+        "reproducibility": 6,
+        "exploitability": 5,
+        "affected_users": 7,
+        "discoverability": 4,
+        "weighted_dread": 6.0,
+        "normal_dread": 5.8,
+        "severity_level": "High",
+        "rank": 6
+      }
+    },
+    {
+      "id": "TF-SD-007",
+      "title": "No account lockout after repeated failed logins",
+      "source": "Sequence Diagram",
+      "description": "The diagram shows Multiple failed logins allowed without lockout or CAPTCHA..",
+      "impact": "Account Management, Brute-force attacks are possible",
+      "likelihood": "Medium",
+      "severity": "Medium",
+      "mitigation": "Lock account or add CAPTCHA after several failed attempts",
+      "status": "Open",
+      "last_updated": "2025-07-10",
+      "rule_id": "SAAS-NOTES-009",
+      "category": "Account Management",
+      "matched_pattern": "No account lockout after repeated failed logins",
+      "evidence": [
+        "Multiple failed logins allowed without lockout or CAPTCHA."
+      ],
+      "dread_score": {
+        "damage": 6,
+        "reproducibility": 7,
+        "exploitability": 6,
+        "affected_users": 6,
+        "discoverability": 4,
+        "weighted_dread": 5.73,
+        "normal_dread": 5.8,
+        "severity_level": "Medium",
+        "rank": 7
+      }
+    },
+    {
+      "id": "TF-SD-009",
+      "title": "No password strength indicator",
+      "source": "Sequence Diagram",
+      "description": "The diagram shows Password entry without strength indicator feedback..",
+      "impact": "User Experience, Users may choose weak passwords",
+      "likelihood": "Medium",
+      "severity": "Medium",
+      "mitigation": "Add visual password strength indicator during password entry",
+      "status": "Open",
+      "last_updated": "2025-07-10",
+      "rule_id": "SAAS-NOTES-018",
+      "category": "User Experience",
+      "matched_pattern": "No password strength indicator",
+      "evidence": [
+        "Password entry without strength indicator feedback."
+      ],
+      "dread_score": {
+        "damage": 6,
+        "reproducibility": 7,
+        "exploitability": 6,
+        "affected_users": 6,
+        "discoverability": 4,
+        "weighted_dread": 5.73,
+        "normal_dread": 5.8,
+        "severity_level": "Medium",
+        "rank": 8
+      }
+    },
+    {
+      "id": "TF-SD-008",
+      "title": "No new device login notification",
+      "source": "Sequence Diagram",
+      "description": "The diagram shows Login from new device without user notification..",
+      "impact": "User Experience, User unaware of new device access",
+      "likelihood": "Medium",
+      "severity": "Low",
+      "mitigation": "Send notification when account is accessed from new device",
+      "status": "Open",
+      "last_updated": "2025-07-10",
+      "rule_id": "SAAS-NOTES-017",
+      "category": "User Experience",
+      "matched_pattern": "No new device login notification",
+      "evidence": [
+        "Login from new device without user notification."
+      ],
+      "dread_score": {
+        "damage": 4,
+        "reproducibility": 5,
+        "exploitability": 4,
+        "affected_users": 4,
+        "discoverability": 3,
+        "weighted_dread": 3.91,
+        "normal_dread": 4.0,
+        "severity_level": "Low",
+        "rank": 9
+      }
+    }
+  ]
+}

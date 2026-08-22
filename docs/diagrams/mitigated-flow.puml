@@ -1,0 +1,67 @@
+@startuml
+title Mitigated authentication and owner-scoped note flow
+
+actor "Browser user" as User
+participant "Server-rendered web app" as App
+participant "Authentication and session controls" as Security
+database "SQLite demonstration database" as DB
+collections "Environment key source" as KeySource
+
+== Registration ==
+User -> App : Registration form and signed double-submit CSRF token
+App -> Security : Validate request size, fields, password policy, pre-auth CSRF
+Security -> Security : Argon2id password hash
+Security -> DB : Store normalized identity and password hash
+Security -> DB : Record registration audit event
+App --> User : Generic success or validation response
+
+== Login ==
+User -> App : Credentials
+App -> Security : Check account and client-address attempt limits
+Security -> DB : Load account and lockout state
+Security -> Security : Verify Argon2id hash or dummy hash
+alt Login accepted
+  Security -> Security : Generate opaque session token and CSRF secret
+  Security -> DB : Store session/CSRF hashes, timestamps, absolute expiry
+  Security -> DB : Record successful login
+  App --> User : HttpOnly, SameSite cookies; Secure in production mode
+else Login rejected
+  Security -> DB : Increment bounded failure state and record failure
+  App --> User : Generic invalid-credentials response
+end
+
+== Protected request ==
+User -> App : Session cookie and request
+App -> Security : Hash token; validate revocation, idle and absolute expiry
+Security -> DB : Rotate/update server-side session state when required
+
+== Create or update note ==
+User -> App : Form body and CSRF token
+App -> Security : Validate CSRF, body size, title/body limits, quota
+App -> DB : Query note by public UUID and authenticated owner ID
+App -> KeySource : Load configured 32-byte key
+App -> App : AES-GCM encrypt title/body with unique nonces and bound AAD
+App -> DB : Insert or update ciphertext and key version
+App -> DB : Record metadata-only audit event
+App --> User : Escaped server-rendered page
+
+== Read, list, and export ==
+User -> App : Note/list/export request
+App -> DB : Query only rows owned by authenticated user; paginate listing
+DB --> App : Ciphertext rows
+App -> KeySource : Load key
+App -> App : Authenticate and decrypt selected fields
+App --> User : Escaped HTML or user-scoped download
+
+== Delete ==
+User -> App : Confirmed POST with CSRF token
+App -> DB : Delete by public UUID and authenticated owner ID
+App -> DB : Record deletion audit event
+App --> User : Generic result
+
+== Logout ==
+User -> App : POST logout with CSRF token
+App -> DB : Revoke hashed session
+App -> DB : Record logout
+App --> User : Expire cookie
+@enduml

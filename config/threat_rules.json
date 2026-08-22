@@ -1,0 +1,115 @@
+{
+  "schema_version": "1.0",
+  "rules": [
+    {
+      "id": "RULE-TM-001-LOCKOUT",
+      "threat_id": "TM-001",
+      "title": "Repeated login attempts are modeled without lockout",
+      "detector": "explicit_evidence",
+      "match_terms": ["no account lockout", "unlimited failed login attempts", "no failed-attempt limit", "lockout is not shown"],
+      "control_terms": [],
+      "control_scope": "none",
+      "evidence_statement": "The diagram explicitly describes repeated authentication attempts without an account lockout control."
+    },
+    {
+      "id": "RULE-TM-001-MFA",
+      "threat_id": "TM-001",
+      "title": "Password-only authentication is explicitly modeled",
+      "detector": "explicit_evidence",
+      "match_terms": ["no 2fa", "no mfa", "mfa is absent", "mfa is also absent", "2fa is absent"],
+      "control_terms": [],
+      "control_scope": "none",
+      "evidence_statement": "The diagram explicitly marks the authentication flow as password-only."
+    },
+    {
+      "id": "RULE-TM-002-AUTH-CONTEXT",
+      "threat_id": "TM-002",
+      "title": "Sensitive note action has no contextual authentication step",
+      "detector": "missing_contextual_control",
+      "match_terms": ["get /api/notes", "create note", "edit note", "delete note", "export request", "query notes"],
+      "control_terms": ["validate token", "validate session", "authenticated request", "auth header", "authenticate user"],
+      "control_scope": "connected_section_prior",
+      "evidence_statement": "A sensitive note interaction is modeled without a connected authentication step earlier in the same section."
+    },
+    {
+      "id": "RULE-TM-003-TOKEN-STORAGE",
+      "threat_id": "TM-003",
+      "title": "Client token storage lacks a modeled secure-session control",
+      "detector": "missing_contextual_control",
+      "match_terms": ["store token"],
+      "control_terms": ["httponly", "secure cookie", "server-side session", "hash session token"],
+      "control_scope": "attached",
+      "evidence_statement": "The client stores an authentication token without a security property on that interaction or its attached note."
+    },
+    {
+      "id": "RULE-TM-004-CSRF",
+      "threat_id": "TM-004",
+      "title": "State-changing browser request has no contextual CSRF check",
+      "detector": "missing_contextual_control",
+      "match_terms": ["post /api/notes", "delete /api/notes", "post /api/login"],
+      "control_terms": ["csrf", "same-origin token", "anti-forgery"],
+      "control_scope": "connected_section_prior",
+      "evidence_statement": "A state-changing browser request is modeled without a connected CSRF validation step earlier in the section."
+    },
+    {
+      "id": "RULE-TM-005-OWNERSHIP",
+      "threat_id": "TM-005",
+      "title": "Note data operation has no contextual ownership check",
+      "detector": "missing_contextual_control",
+      "match_terms": ["query notes", "query all notes", "update notes", "insert note", "delete /api/notes", "export request"],
+      "control_terms": ["owner id", "ownership check", "authorize note", "access control", "permission check", "user-scoped"],
+      "control_scope": "connected_section_prior",
+      "evidence_statement": "A note data operation is modeled without a connected ownership or user-scope check earlier in the section."
+    },
+    {
+      "id": "RULE-TM-006-ADMIN-RBAC",
+      "threat_id": "TM-006",
+      "title": "Administrative action has no contextual role check",
+      "detector": "missing_contextual_control",
+      "match_terms": ["provision user", "review alerts", "trigger manual scan", "admin action"],
+      "control_terms": ["rbac", "role check", "admin authorization", "require admin"],
+      "control_scope": "connected_section_prior",
+      "evidence_statement": "An administrative interaction is modeled without a connected role check earlier in the same section."
+    },
+    {
+      "id": "RULE-TM-009-OUTPUT",
+      "threat_id": "TM-009",
+      "title": "User-visible note output has no contextual encoding control",
+      "detector": "missing_contextual_control",
+      "match_terms": ["display notes", "show new note", "return notes data", "notes response", "exported data", "show error", "display internal error"],
+      "control_terms": ["output encode", "escape html", "autoescape", "textcontent"],
+      "control_scope": "connected_section",
+      "evidence_statement": "User-visible output is modeled without a connected output-encoding step in the same section."
+    },
+    {
+      "id": "RULE-TM-010-ERROR-DETAIL",
+      "threat_id": "TM-010",
+      "title": "Sensitive implementation detail appears in an error flow",
+      "detector": "explicit_evidence",
+      "match_terms": ["sensitive data in error", "sensitive field detail", "password field contains", "stack trace", "sql error detail"],
+      "control_terms": [],
+      "control_scope": "none",
+      "evidence_statement": "The diagram explicitly includes sensitive or implementation-specific error detail."
+    },
+    {
+      "id": "RULE-TM-014-RATE-LIMIT",
+      "threat_id": "TM-014",
+      "title": "Rate limiting is explicitly absent",
+      "detector": "explicit_evidence",
+      "match_terms": ["no rate limiting", "without rate limiting", "rate limiting is not shown", "rate limiting and owner-scoped export are not shown"],
+      "control_terms": [],
+      "control_scope": "none",
+      "evidence_statement": "The diagram explicitly states that an operation has no rate limiting."
+    },
+    {
+      "id": "RULE-TM-017-AUDIT",
+      "threat_id": "TM-017",
+      "title": "Audit logging is explicitly absent",
+      "detector": "explicit_evidence",
+      "match_terms": ["no audit logging", "without audit logging", "audit recording is not shown", "audit recording are not shown"],
+      "control_terms": [],
+      "control_scope": "none",
+      "evidence_statement": "The diagram explicitly states that a sensitive operation lacks audit logging."
+    }
+  ]
+}

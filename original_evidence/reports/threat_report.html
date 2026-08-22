@@ -1,0 +1,1479 @@
+
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Threat Analysis Report</title>
+            <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background: #1a1a1a;
+            color: #e0e0e0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            background: #23232b;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #e0e0e0;
+            margin-bottom: 10px;
+        }
+        .summary-cards {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+        .dread-summary {
+            background: #23232b;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+        }
+        .dread-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .dread-metric {
+            background: #1a1a1a;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .dread-score {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #4dd0e1;
+        }
+        .dread-label {
+            color: #b0b0b0;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+        .dread-summary {
+            background: #23232b;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+        }
+        .dread-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .dread-metric {
+            background: #1a1a1a;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .dread-score {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #4dd0e1;
+        }
+        .dread-label {
+            color: #b0b0b0;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+        .summary-card {
+            background: #23232b;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+            text-align: center;
+            min-width: 150px;
+            transition: transform 0.3s ease;
+        }
+        .summary-card:hover {
+            transform: translateY(-5px);
+        }
+        .summary-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .critical { color: #e57373; }
+        .high { color: #ffb74d; }
+        .medium { color: #fff176; }
+        .low { color: #4dd0e1; }
+        .summary-label {
+            color: #b0b0b0;
+            font-size: 0.9em;
+        }
+        .findings-section {
+            background: #2d2d2d;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        .section-header {
+            background: #394666;
+            color: #e0e0e0;
+            padding: 16px;
+            border-radius: 8px;
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .filters {
+            padding: 10px 0;
+        }
+        .filter-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .filter-btn {
+            background: #394666;
+            color: #e0e0e0;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .filter-btn:hover {
+            background: #4a5d8f;
+        }
+        .filter-btn.active {
+            background: #4a5d8f;
+        }
+        .finding-card {
+            background: #1a1a1a;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid #394666;
+        }
+        .dread-scores {
+            display: flex;
+            gap: 10px;
+            margin: 10px 0;
+            flex-wrap: wrap;
+        }
+        .dread-badge {
+            background: #394666;
+            color: #e0e0e0;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+        .dread-breakdown {
+            background: #23232b;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        .dread-breakdown h4 {
+            color: #4dd0e1;
+            margin-bottom: 10px;
+        }
+        .dread-item {
+            display: flex;
+            justify-content: space-between;
+            margin: 5px 0;
+            color: #b0b0b0;
+        }
+        .dread-scores {
+            display: flex;
+            gap: 10px;
+            margin: 10px 0;
+            flex-wrap: wrap;
+        }
+        .dread-badge {
+            background: #394666;
+            color: #e0e0e0;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+        .dread-breakdown {
+            background: #23232b;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        .dread-breakdown h4 {
+            color: #4dd0e1;
+            margin-bottom: 10px;
+        }
+        .dread-item {
+            display: flex;
+            justify-content: space-between;
+            margin: 5px 0;
+            color: #b0b0b0;
+        }
+        .finding-header {
+            cursor: pointer;
+        }
+        .meta-item {
+            display: inline-block;
+            margin-right: 15px;
+            color: #b0b0b0;
+            font-size: 0.95em;
+        }
+        .severity-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            font-weight: bold;
+            margin-right: 10px;
+            color: #1a1a1a;
+        }
+        .severity-critical { background: #8f4a4a; }
+        .severity-high { background: #8f6e4a; }
+        .severity-medium { background: #6e8f4a; }
+        .severity-low { background: #4a8f8f; }
+        .finding-title {
+            font-size: 1.1em;
+            font-weight: bold;
+            margin: 10px 0;
+            color: #e0e0e0;
+        }
+        .finding-details {
+            color: #b0b0b0;
+            font-size: 0.9em;
+        }
+        .evidence-list {
+            margin: 10px 0;
+            padding-left: 20px;
+            color: #b0b0b0;
+        }
+        .evidence-item {
+            margin: 5px 0;
+        }
+        .mitigation-box {
+            background: #23232b;
+            border: 1px solid #4a8f8f;
+            border-radius: 5px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+        .mitigation-box h4 {
+            color: #4a8f8f;
+            margin-bottom: 10px;
+        }
+        @media (max-width: 768px) {
+            .stat-card {
+                min-width: 120px;
+            }
+            .summary-cards {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+        </style>
+        </head>
+        <body>
+            <div class="container">
+                <div class="header">
+                    <h1>Threat Analysis Report</h1>
+                </div>
+                
+                <div class="summary-cards">
+                    <div class="summary-card">
+                        <div class="summary-number">9</div>
+                        <div class="summary-label">Total Findings</div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-number critical">2</div>
+                        <div class="summary-label">Critical</div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-number high">4</div>
+                        <div class="summary-label">High</div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-number medium">2</div>
+                        <div class="summary-label">Medium</div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-number low">1</div>
+                        <div class="summary-label">Low</div>
+                    </div>
+                </div>
+                
+                
+                <div class="dread-summary">
+                    <h2>🎯 DREAD Model Analysis</h2>
+                    <p>Threat assessment using the DREAD (Damage, Reproducibility, Exploitability, Affected Users, Discoverability) model with weighted scoring.</p>
+                    
+                    <div class="dread-metrics">
+                        <div class="dread-metric">
+                            <div class="dread-score">6.18</div>
+                            <div class="dread-label">Avg Weighted DREAD</div>
+                        </div>
+                        <div class="dread-metric">
+                            <div class="dread-score">6.13</div>
+                            <div class="dread-label">Avg Normal DREAD</div>
+                        </div>
+                        <div class="dread-metric">
+                            <div class="dread-score">7.27</div>
+                            <div class="dread-label">Max Weighted DREAD</div>
+                        </div>
+                        <div class="dread-metric">
+                            <div class="dread-score">3.91</div>
+                            <div class="dread-label">Min Weighted DREAD</div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 20px;">
+                        <h4>DREAD Weights:</h4>
+                        <ul style="color: #b0b0b0; margin: 10px 0;">
+                            <li><strong>Damage:</strong> Weight 3 - Impact of the damage</li>
+                            <li><strong>Reproducibility:</strong> Weight 1 - Rate of exploitation</li>
+                            <li><strong>Exploitability:</strong> Weight 2 - Success rate of exploitation</li>
+                            <li><strong>Affected Users:</strong> Weight 3 - Number of affected users</li>
+                            <li><strong>Discoverability:</strong> Weight 2 - Difficulty of discovering vulnerability</li>
+                        </ul>
+                    </div>
+                </div>
+        
+                
+                <div class="findings-section">
+                    <div class="section-header">
+                        📋 Threat Findings
+                    </div>
+                    
+                    <div class="filters">
+                        <div class="filter-buttons">
+                            <button class="filter-btn active" onclick="filterFindings('all')">All (9)</button>
+        
+                            <button class="filter-btn" onclick="filterFindings('Denial of Service')">Denial of Service (2)</button>
+            
+                            <button class="filter-btn" onclick="filterFindings('Elevation of Privilege')">Elevation of Privilege (2)</button>
+            
+                            <button class="filter-btn" onclick="filterFindings('Information Disclosure')">Information Disclosure (1)</button>
+            
+                            <button class="filter-btn" onclick="filterFindings('Authentication')">Authentication (1)</button>
+            
+                            <button class="filter-btn" onclick="filterFindings('Account Management')">Account Management (1)</button>
+            
+                            <button class="filter-btn" onclick="filterFindings('User Experience')">User Experience (2)</button>
+            
+                        </div>
+                    </div>
+        
+                <div class="finding-card" data-category="Denial of Service">
+
+                    <div class="finding-header" onclick="toggleFinding(0)">
+                        <span class="play-icon" id="play-icon-0">▶</span>
+                        <div class="finding-title">Resource exhaustion through unlimited operations</div>
+                        <div class="finding-meta">
+                            <div class="meta-item">
+                                <span class="severity-badge severity-critical">Critical</span>
+                            </div>
+                            <div class="meta-item">
+                                <strong>Category:</strong> Denial of Service
+                            </div>
+                            <div class="meta-item">
+                                <strong>Likelihood:</strong> High
+                            </div>
+                            <div class="meta-item">
+                                <strong>Rule ID:</strong> STRIDE-D-002
+                            </div>
+                            <div class="meta-item">
+                                <strong>Status:</strong> Open
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="finding-content" id="finding-content-0" style="display:none;">
+
+                        <div class="subsection-header" onclick="toggleSubsection('finding', 0)">
+                            <span class="play-icon" id="play-icon-finding-0">▶</span>
+                            <span class="subsection-title">Threat Finding</span>
+                        </div>
+                        <div class="subsection-content" id="subsection-finding-0" style="display:none;">
+                            
+                        <div class="dread-scores">
+                            <div class="dread-badge">Rank #1</div>
+                            <div class="dread-badge">Weighted DREAD: 7.27</div>
+                            <div class="dread-badge">Normal DREAD: 7.2</div>
+                            <div class="dread-badge">Severity: Critical</div>
+                        </div>
+                        
+                        <div class="dread-breakdown">
+                            <h4>DREAD Breakdown:</h4>
+                            <div class="dread-item">
+                                <span>Damage:</span>
+                                <span>8/10</span>
+                            </div>
+                            <div class="dread-item">
+                                <span>Reproducibility:</span>
+                                <span>8/10</span>
+                            </div>
+                            <div class="dread-item">
+                                <span>Exploitability:</span>
+                                <span>7/10</span>
+                            </div>
+                            <div class="dread-item">
+                                <span>Affected Users:</span>
+                                <span>8/10</span>
+                            </div>
+                            <div class="dread-item">
+                                <span>Discoverability:</span>
+                                <span>5/10</span>
+                            </div>
+                        </div>
+        
+                            <div class="finding-section">
+                                <h5>Description</h5>
+                                <p>The diagram shows API call 'GET /api/notes (no auth header)' without rate limiting from 'WC', API call 'Forward request' without rate limiting from 'AG'.</p>
+                            </div>
+                            <div class="finding-section">
+                                <h5>Impact</h5>
+                                <p>Denial of Service, System resources can be exhausted</p>
+                            </div>
+                            <div class="finding-section">
+                                <h5>Evidence</h5>
+                                <ul class="evidence-list">
+            <li class="evidence-item">API call 'GET /api/notes (no auth header)' without rate limiting from 'WC'</li>
+<li class="evidence-item">API call 'Forward request' without rate limiting from 'AG'</li>
+<li class="evidence-item">API call 'POST /api/login' without rate limiting from 'WC'</li>
+<li class="evidence-item">API call 'POST /api/notes/sync (with token)' without rate limiting from 'WC'</li>
+<li class="evidence-item">API call 'Process sync request' without rate limiting from 'AG'</li>
+<li class="evidence-item">API call 'POST /api/notes/create' without rate limiting from 'WC'</li>
+<li class="evidence-item">API call 'GET /api/notes/export' without rate limiting from 'WC'</li>
+<li class="evidence-item">API call 'Export request' without rate limiting from 'AG'</li>
+<li class="evidence-item">API call 'POST /api/notes/create' without rate limiting from 'WC'</li>
+<li class="evidence-item">API call 'Process request' without rate limiting from 'AG'</li>
+<li class="evidence-item">API call 'POST /api/login' without rate limiting from 'WC'</li>
+<li class="evidence-item">API call 'POST /api/login (wrong password)' without rate limiting from 'WC'</li>
+<li class="evidence-item">API call 'POST /api/login (new device)' without rate limiting from 'WC'</li>
+<li class="evidence-item">API call 'DELETE /api/notes/{id}' without rate limiting from 'WC'</li>
+
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="subsection-header" onclick="toggleSubsection('countermeasures', 0)">
+                            <span class="play-icon" id="play-icon-countermeasures-0">▶</span>
+                            <span class="subsection-title">Countermeasures & Solutions</span>
+                        </div>
+                        <div class="subsection-content" id="subsection-countermeasures-0" style="display:none;">
+            
+<div class="countermeasure-card">
+  <div class="countermeasure-header">
+    <div class="countermeasure-title">Implement Rate Limiting</div>
+    <div class="countermeasure-meta">
+      <span class="priority-badge">Critical</span>
+      <span class="effort-badge">Medium</span>
+      <span style="color: #b0b0b0; font-size: 0.9em;">2-3 days</span>
+    </div>
+  </div>
+  <div class="countermeasure-content">
+    <div class="content-section"><h5>📋 Description</h5><p>Implement comprehensive rate limiting across all API endpoints to prevent resource exhaustion attacks.</p></div>
+    <div class="content-section"><h5>🔧 Implementation Steps</h5><ol class="steps-list"><li>1. Install and configure a rate limiting middleware (e.g., Redis-based)</li><li>2. Define rate limits per endpoint and user/IP</li><li>3. Implement sliding window rate limiting algorithm</li><li>4. Add rate limit headers to responses</li><li>5. Configure different limits for authenticated vs unauthenticated users</li><li>6. Set up monitoring and alerting for rate limit violations</li></ol></div>
+    <div class="content-section"><h5>📦 Dependencies</h5><ul class="requirements-list"><li>Redis server</li><li>Rate limiting library</li></ul></div>
+    <div class="content-section"><h5>🖼️ Diagram</h5><img src="DoS Mitigation via adaptive rate limiting.png" alt="Diagram for Resource exhaustion through unlimited operations" style="max-width:100%;border-radius:8px;margin:10px 0;box-shadow:0 2px 8px #000;"/></div>
+  </div>
+</div>
+
+<div class="countermeasure-card">
+  <div class="countermeasure-header">
+    <div class="countermeasure-title">Implement Resource Quotas</div>
+    <div class="countermeasure-meta">
+      <span class="priority-badge">Critical</span>
+      <span class="effort-badge">Hard</span>
+      <span style="color: #b0b0b0; font-size: 0.9em;">1-2 weeks</span>
+    </div>
+  </div>
+  <div class="countermeasure-content">
+    <div class="content-section"><h5>📋 Description</h5><p>Set up resource quotas and limits to prevent system exhaustion.</p></div>
+    <div class="content-section"><h5>🔧 Implementation Steps</h5><ol class="steps-list"><li>1. Define resource quotas per user/tenant</li><li>2. Implement database connection pooling</li><li>3. Set memory and CPU limits per request</li><li>4. Configure timeout limits for long-running operations</li><li>5. Implement circuit breakers for external services</li><li>6. Add resource usage monitoring</li></ol></div>
+    <div class="content-section"><h5>📦 Dependencies</h5><ul class="requirements-list"><li>Monitoring system</li><li>Database optimization</li></ul></div>
+    <div class="content-section"><h5>🖼️ Diagram</h5><img src="DoS Mitigation via adaptive rate limiting.png" alt="Diagram for Resource exhaustion through unlimited operations" style="max-width:100%;border-radius:8px;margin:10px 0;box-shadow:0 2px 8px #000;"/></div>
+  </div>
+</div>
+</div></div></div>
+                <div class="finding-card" data-category="Elevation of Privilege">
+
+                    <div class="finding-header" onclick="toggleFinding(1)">
+                        <span class="play-icon" id="play-icon-1">▶</span>
+                        <div class="finding-title">User can access admin functions without proper authorization</div>
+                        <div class="finding-meta">
+                            <div class="meta-item">
+                                <span class="severity-badge severity-critical">Critical</span>
+                            </div>
+                            <div class="meta-item">
+                                <strong>Category:</strong> Elevation of Privilege
+                            </div>
+                            <div class="meta-item">
+                                <strong>Likelihood:</strong> High
+                            </div>
+                            <div class="meta-item">
+                                <strong>Rule ID:</strong> STRIDE-E-001
+                            </div>
+                            <div class="meta-item">
+                                <strong>Status:</strong> Open
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="finding-content" id="finding-content-1" style="display:none;">
+
+                        <div class="subsection-header" onclick="toggleSubsection('finding', 1)">
+                            <span class="play-icon" id="play-icon-finding-1">▶</span>
+                            <span class="subsection-title">Threat Finding</span>
+                        </div>
+                        <div class="subsection-content" id="subsection-finding-1" style="display:none;">
+                            
+                        <div class="dread-scores">
+                            <div class="dread-badge">Rank #2</div>
+                            <div class="dread-badge">Weighted DREAD: 7.27</div>
+                            <div class="dread-badge">Normal DREAD: 7.0</div>
+                            <div class="dread-badge">Severity: Critical</div>
+                        </div>
+                        
+                        <div class="dread-breakdown">
+                            <h4>DREAD Breakdown:</h4>
+                            <div class="dread-item">
+                                <span>Damage:</span>
+                                <span>9/10</span>
+                            </div>
+                            <div class="dread-item">
+                                <span>Reproducibility:</span>
+                                <span>7/10</span>
+                            </div>
+                            <div class="dread-item">
+                                <span>Exploitability:</span>
+                                <span>6/10</span>
+                            </div>
+                            <div class="dread-item">
+                                <span>Affected Users:</span>
+                                <span>8/10</span>
+                            </div>
+                            <div class="dread-item">
+                                <span>Discoverability:</span>
+                                <span>5/10</span>
+                            </div>
+                        </div>
+        
+                            <div class="finding-section">
+                                <h5>Description</h5>
+                                <p>The diagram shows Admin action 'Export all notes' without privilege check from 'U', Admin action 'GET /api/notes/export' without privilege check from 'WC'.</p>
+                            </div>
+                            <div class="finding-section">
+                                <h5>Impact</h5>
+                                <p>Elevation of Privilege, Unauthorized access to administrative functions</p>
+                            </div>
+                            <div class="finding-section">
+                                <h5>Evidence</h5>
+                                <ul class="evidence-list">
+            <li class="evidence-item">Admin action 'Export all notes' without privilege check from 'U'</li>
+<li class="evidence-item">Admin action 'GET /api/notes/export' without privilege check from 'WC'</li>
+<li class="evidence-item">Admin action 'Export request' without privilege check from 'AG'</li>
+<li class="evidence-item">Admin action 'Delete note' without privilege check from 'U'</li>
+<li class="evidence-item">Admin action 'DELETE /api/notes/{id}' without privilege check from 'WC'</li>
+<li class="evidence-item">Admin action 'Export file' without privilege check from 'NS'</li>
+<li class="evidence-item">Admin action 'Export file' without privilege check from 'AG'</li>
+
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="subsection-header" onclick="toggleSubsection('countermeasures', 1)">
+                            <span class="play-icon" id="play-icon-countermeasures-1">▶</span>
+                            <span class="subsection-title">Countermeasures & Solutions</span>
+                        </div>
+                        <div class="subsection-content" id="subsection-countermeasures-1" style="display:none;">
+            
+<div class="countermeasure-card">
+  <div class="countermeasure-header">
+    <div class="countermeasure-title">Implement Role-Based Access Control (RBAC)</div>
+    <div class="countermeasure-meta">
+      <span class="priority-badge">Critical</span>
+      <span class="effort-badge">Medium</span>
+      <span style="color: #b0b0b0; font-size: 0.9em;">3-5 days</span>
+    </div>
+  </div>
+  <div class="countermeasure-content">
+    <div class="content-section"><h5>📋 Description</h5><p>Implement comprehensive RBAC system to control access to administrative functions.</p></div>
+    <div class="content-section"><h5>🔧 Implementation Steps</h5><ol class="steps-list"><li>1. Define user roles and permissions</li><li>2. Implement role-based middleware</li><li>3. Add permission checks to all admin endpoints</li><li>4. Implement audit logging for admin actions</li><li>5. Add role validation on authentication</li><li>6. Create admin-only API endpoints</li></ol></div>
+    <div class="content-section"><h5>📦 Dependencies</h5><ul class="requirements-list"><li>Authentication system</li><li>Database schema updates</li></ul></div>
+    <div class="content-section"><h5>🖼️ Diagram</h5><img src="RBAC Enforcement for Admin Action Restriction.png" alt="Diagram for User can access admin functions without proper authorization" style="max-width:100%;border-radius:8px;margin:10px 0;box-shadow:0 2px 8px #000;"/></div>
+  </div>
+</div>
+
+<div class="countermeasure-card">
+  <div class="countermeasure-header">
+    <div class="countermeasure-title">Implement API Gateway Authorization</div>
+    <div class="countermeasure-meta">
+      <span class="priority-badge">Critical</span>
+      <span class="effort-badge">Medium</span>
+      <span style="color: #b0b0b0; font-size: 0.9em;">2-3 days</span>
+    </div>
+  </div>
+  <div class="countermeasure-content">
+    <div class="content-section"><h5>📋 Description</h5><p>Add authorization layer at the API gateway level.</p></div>
+    <div class="content-section"><h5>🔧 Implementation Steps</h5><ol class="steps-list"><li>1. Configure API gateway with authorization policies</li><li>2. Implement JWT token validation with roles</li><li>3. Add request filtering based on user roles</li><li>4. Implement API key management for admin access</li><li>5. Add request logging for admin endpoints</li><li>6. Configure rate limiting for admin functions</li></ol></div>
+    <div class="content-section"><h5>📦 Dependencies</h5><ul class="requirements-list"><li>API Gateway</li><li>JWT implementation</li></ul></div>
+    <div class="content-section"><h5>🖼️ Diagram</h5><img src="RBAC Enforcement for Admin Action Restriction.png" alt="Diagram for User can access admin functions without proper authorization" style="max-width:100%;border-radius:8px;margin:10px 0;box-shadow:0 2px 8px #000;"/></div>
+  </div>
+</div>
+</div></div></div>
+                <div class="finding-card" data-category="Denial of Service">
+
+                    <div class="finding-header" onclick="toggleFinding(2)">
+                        <span class="play-icon" id="play-icon-2">▶</span>
+                        <div class="finding-title">No rate limiting on API endpoints</div>
+                        <div class="finding-meta">
+                            <div class="meta-item">
+                                <span class="severity-badge severity-high">High</span>
+                            </div>
+                            <div class="meta-item">
+                                <strong>Category:</strong> Denial of Service
+                            </div>
+                            <div class="meta-item">
+                                <strong>Likelihood:</strong> High
+                            </div>
+                            <div class="meta-item">
+                                <strong>Rule ID:</strong> STRIDE-D-001
+                            </div>
+                            <div class="meta-item">
+                                <strong>Status:</strong> Open
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="finding-content" id="finding-content-2" style="display:none;">
+
+                        <div class="subsection-header" onclick="toggleSubsection('finding', 2)">
+                            <span class="play-icon" id="play-icon-finding-2">▶</span>
+                            <span class="subsection-title">Threat Finding</span>
+                        </div>
+                        <div class="subsection-content" id="subsection-finding-2" style="display:none;">
+                            
+                        <div class="dread-scores">
+                            <div class="dread-badge">Rank #3</div>
+                            <div class="dread-badge">Weighted DREAD: 7.18</div>
+                            <div class="dread-badge">Normal DREAD: 7.4</div>
+                            <div class="dread-badge">Severity: High</div>
+                        </div>
+                        
+                        <div class="dread-breakdown">
+                            <h4>DREAD Breakdown:</h4>
+                            <div class="dread-item">
+                                <span>Damage:</span>
+                                <span>7/10</span>
+                            </div>
+                            <div class="dread-item">
+                                <span>Reproducibility:</span>
+                                <span>9/10</span>
+                            </div>
+                            <div class="dread-item">
+                                <span>Exploitability:</span>
+                                <span>8/10</span>
+                            </div>
+                            <div class="dread-item">
+                                <span>Affected Users:</span>
+                                <span>7/10</span>
+                            </div>
+                            <div class="dread-item">
+                                <span>Discoverability:</span>
+                                <span>6/10</span>
+                            </div>
+                        </div>
+        
+                            <div class="finding-section">
+                                <h5>Description</h5>
+                                <p>The diagram shows API call 'GET /api/notes (no auth header)' without rate limiting from 'WC', API call 'Forward request' without rate limiting from 'AG'.</p>
+                            </div>
+                            <div class="finding-section">
+                                <h5>Impact</h5>
+                                <p>Denial of Service, System can be overwhelmed by excessive requests</p>
+                            </div>
+                            <div class="finding-section">
+                                <h5>Evidence</h5>
+                                <ul class="evidence-list">
+            <li class="evidence-item">API call 'GET /api/notes (no auth header)' without rate limiting from 'WC'</li>
+<li class="evidence-item">API call 'Forward request' without rate limiting from 'AG'</li>
+<li class="evidence-item">API call 'POST /api/login' without rate limiting from 'WC'</li>
+<li class="evidence-item">API call 'POST /api/notes/sync (with token)' without rate limiting from 'WC'</li>
+<li class="evidence-item">API call 'Process sync request' without rate limiting from 'AG'</li>
+<li class="evidence-item">API call 'POST /api/notes/create' without rate limiting from 'WC'</li>
+<li class="evidence-item">API call 'GET /api/notes/export' without rate limiting from 'WC'</li>
+<li class="evidence-item">API call 'Export request' without rate limiting from 'AG'</li>
+<li class="evidence-item">API call 'POST /api/notes/create' without rate limiting from 'WC'</li>
+<li class="evidence-item">API call 'Process request' without rate limiting from 'AG'</li>
+<li class="evidence-item">API call 'POST /api/login' without rate limiting from 'WC'</li>
+<li class="evidence-item">API call 'POST /api/login (wrong password)' without rate limiting from 'WC'</li>
+<li class="evidence-item">API call 'POST /api/login (new device)' without rate limiting from 'WC'</li>
+<li class="evidence-item">API call 'DELETE /api/notes/{id}' without rate limiting from 'WC'</li>
+
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="subsection-header" onclick="toggleSubsection('countermeasures', 2)">
+                            <span class="play-icon" id="play-icon-countermeasures-2">▶</span>
+                            <span class="subsection-title">Countermeasures & Solutions</span>
+                        </div>
+                        <div class="subsection-content" id="subsection-countermeasures-2" style="display:none;">
+            
+<div class="countermeasure-card">
+  <div class="countermeasure-header">
+    <div class="countermeasure-title">Implement Comprehensive Rate Limiting</div>
+    <div class="countermeasure-meta">
+      <span class="priority-badge">High</span>
+      <span class="effort-badge">Medium</span>
+      <span style="color: #b0b0b0; font-size: 0.9em;">2-3 days</span>
+    </div>
+  </div>
+  <div class="countermeasure-content">
+    <div class="content-section"><h5>📋 Description</h5><p>Implement rate limiting across all API endpoints with different strategies.</p></div>
+    <div class="content-section"><h5>🔧 Implementation Steps</h5><ol class="steps-list"><li>1. Implement IP-based rate limiting</li><li>2. Add user-based rate limiting for authenticated requests</li><li>3. Configure different limits for different endpoints</li><li>4. Implement adaptive rate limiting</li><li>5. Add rate limit headers to responses</li><li>6. Set up rate limit monitoring and alerting</li></ol></div>
+    <div class="content-section"><h5>📦 Dependencies</h5><ul class="requirements-list"><li>Redis server</li><li>Rate limiting library</li></ul></div>
+    <div class="content-section"><h5>🖼️ Diagram</h5><img src="resource quota enforcement.png" alt="Diagram for No rate limiting on API endpoints" style="max-width:100%;border-radius:8px;margin:10px 0;box-shadow:0 2px 8px #000;"/></div>
+  </div>
+</div>
+</div></div></div>
+                <div class="finding-card" data-category="Elevation of Privilege">
+
+                    <div class="finding-header" onclick="toggleFinding(3)">
+                        <span class="play-icon" id="play-icon-3">▶</span>
+                        <div class="finding-title">Session management without proper timeout</div>
+                        <div class="finding-meta">
+                            <div class="meta-item">
+                                <span class="severity-badge severity-high">High</span>
+                            </div>
+                            <div class="meta-item">
+                                <strong>Category:</strong> Elevation of Privilege
+                            </div>
+                            <div class="meta-item">
+                                <strong>Likelihood:</strong> High
+                            </div>
+                            <div class="meta-item">
+                                <strong>Rule ID:</strong> STRIDE-E-002
+                            </div>
+                            <div class="meta-item">
+                                <strong>Status:</strong> Open
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="finding-content" id="finding-content-3" style="display:none;">
+
+                        <div class="subsection-header" onclick="toggleSubsection('finding', 3)">
+                            <span class="play-icon" id="play-icon-finding-3">▶</span>
+                            <span class="subsection-title">Threat Finding</span>
+                        </div>
+                        <div class="subsection-content" id="subsection-finding-3" style="display:none;">
+                            
+                        <div class="dread-scores">
+                            <div class="dread-badge">Rank #4</div>
+                            <div class="dread-badge">Weighted DREAD: 6.55</div>
+                            <div class="dread-badge">Normal DREAD: 6.4</div>
+                            <div class="dread-badge">Severity: High</div>
+                        </div>
+                        
+                        <div class="dread-breakdown">
+                            <h4>DREAD Breakdown:</h4>
+                            <div class="dread-item">
+                                <span>Damage:</span>
+                                <span>8/10</span>
+                            </div>
+                            <div class="dread-item">
+                                <span>Reproducibility:</span>
+                                <span>7/10</span>
+                            </div>
+                            <div class="dread-item">
+                                <span>Exploitability:</span>
+                                <span>6/10</span>
+                            </div>
+                            <div class="dread-item">
+                                <span>Affected Users:</span>
+                                <span>7/10</span>
+                            </div>
+                            <div class="dread-item">
+                                <span>Discoverability:</span>
+                                <span>4/10</span>
+                            </div>
+                        </div>
+        
+                            <div class="finding-section">
+                                <h5>Description</h5>
+                                <p>The diagram shows Sensitive action 'GET /api/notes (no auth header)' without audit logging from 'WC', Sensitive action 'POST /api/login' without audit logging from 'WC'.</p>
+                            </div>
+                            <div class="finding-section">
+                                <h5>Impact</h5>
+                                <p>Elevation of Privilege, Session hijacking and unauthorized access</p>
+                            </div>
+                            <div class="finding-section">
+                                <h5>Evidence</h5>
+                                <ul class="evidence-list">
+            <li class="evidence-item">Sensitive action 'GET /api/notes (no auth header)' without audit logging from 'WC'</li>
+<li class="evidence-item">Sensitive action 'POST /api/login' without audit logging from 'WC'</li>
+<li class="evidence-item">Sensitive action 'Login (no 2FA)' without audit logging from 'U'</li>
+<li class="evidence-item">Sensitive action 'POST /api/login' without audit logging from 'WC'</li>
+<li class="evidence-item">Sensitive action 'Multiple failed logins' without audit logging from 'U'</li>
+<li class="evidence-item">Sensitive action 'POST /api/login (wrong password)' without audit logging from 'WC'</li>
+<li class="evidence-item">Sensitive action 'Login from new device' without audit logging from 'U'</li>
+<li class="evidence-item">Sensitive action 'POST /api/login (new device)' without audit logging from 'WC'</li>
+<li class="evidence-item">Sensitive action 'Return auth token' without audit logging from 'AS'</li>
+<li class="evidence-item">Sensitive action 'Return auth token' without audit logging from 'AG'</li>
+<li class="evidence-item">Sensitive action 'Return auth token' without audit logging from 'AS'</li>
+<li class="evidence-item">Sensitive action 'Return auth token' without audit logging from 'AG'</li>
+<li class="evidence-item">Sensitive action 'Return auth token' without audit logging from 'AS'</li>
+<li class="evidence-item">Sensitive action 'Return auth token' without audit logging from 'AG'</li>
+
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="subsection-header" onclick="toggleSubsection('countermeasures', 3)">
+                            <span class="play-icon" id="play-icon-countermeasures-3">▶</span>
+                            <span class="subsection-title">Countermeasures & Solutions</span>
+                        </div>
+                        <div class="subsection-content" id="subsection-countermeasures-3" style="display:none;">
+            
+<div class="countermeasure-card">
+  <div class="countermeasure-header">
+    <div class="countermeasure-title">Implement Secure Session Management</div>
+    <div class="countermeasure-meta">
+      <span class="priority-badge">High</span>
+      <span class="effort-badge">Medium</span>
+      <span style="color: #b0b0b0; font-size: 0.9em;">3-4 days</span>
+    </div>
+  </div>
+  <div class="countermeasure-content">
+    <div class="content-section"><h5>📋 Description</h5><p>Implement comprehensive session management with proper timeouts and security measures.</p></div>
+    <div class="content-section"><h5>🔧 Implementation Steps</h5><ol class="steps-list"><li>1. Implement session timeouts (15-30 minutes)</li><li>2. Add session invalidation on logout</li><li>3. Implement session rotation on privilege changes</li><li>4. Add session binding to IP/user agent</li><li>5. Implement concurrent session limits</li><li>6. Add session audit logging</li></ol></div>
+    <div class="content-section"><h5>📦 Dependencies</h5><ul class="requirements-list"><li>Redis server</li><li>Session management library</li></ul></div>
+    <div class="content-section"><h5>🖼️ Diagram</h5><img src="session timeout enforcement.png" alt="Diagram for Session management without proper timeout" style="max-width:100%;border-radius:8px;margin:10px 0;box-shadow:0 2px 8px #000;"/></div>
+  </div>
+</div>
+</div></div></div>
+                <div class="finding-card" data-category="Information Disclosure">
+
+                    <div class="finding-header" onclick="toggleFinding(4)">
+                        <span class="play-icon" id="play-icon-4">▶</span>
+                        <div class="finding-title">Sensitive data exposed in error messages</div>
+                        <div class="finding-meta">
+                            <div class="meta-item">
+                                <span class="severity-badge severity-high">High</span>
+                            </div>
+                            <div class="meta-item">
+                                <strong>Category:</strong> Information Disclosure
+                            </div>
+                            <div class="meta-item">
+                                <strong>Likelihood:</strong> Medium
+                            </div>
+                            <div class="meta-item">
+                                <strong>Rule ID:</strong> STRIDE-I-001
+                            </div>
+                            <div class="meta-item">
+                                <strong>Status:</strong> Open
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="finding-content" id="finding-content-4" style="display:none;">
+
+                        <div class="subsection-header" onclick="toggleSubsection('finding', 4)">
+                            <span class="play-icon" id="play-icon-finding-4">▶</span>
+                            <span class="subsection-title">Threat Finding</span>
+                        </div>
+                        <div class="subsection-content" id="subsection-finding-4" style="display:none;">
+                            
+                        <div class="dread-scores">
+                            <div class="dread-badge">Rank #5</div>
+                            <div class="dread-badge">Weighted DREAD: 6.0</div>
+                            <div class="dread-badge">Normal DREAD: 5.8</div>
+                            <div class="dread-badge">Severity: High</div>
+                        </div>
+                        
+                        <div class="dread-breakdown">
+                            <h4>DREAD Breakdown:</h4>
+                            <div class="dread-item">
+                                <span>Damage:</span>
+                                <span>7/10</span>
+                            </div>
+                            <div class="dread-item">
+                                <span>Reproducibility:</span>
+                                <span>6/10</span>
+                            </div>
+                            <div class="dread-item">
+                                <span>Exploitability:</span>
+                                <span>5/10</span>
+                            </div>
+                            <div class="dread-item">
+                                <span>Affected Users:</span>
+                                <span>7/10</span>
+                            </div>
+                            <div class="dread-item">
+                                <span>Discoverability:</span>
+                                <span>4/10</span>
+                            </div>
+                        </div>
+        
+                            <div class="finding-section">
+                                <h5>Description</h5>
+                                <p>The diagram shows Potential sensitive data in error message: 'Error: "Password field contains invalid characters"'.</p>
+                            </div>
+                            <div class="finding-section">
+                                <h5>Impact</h5>
+                                <p>Information Disclosure, Sensitive data leaked through error messages</p>
+                            </div>
+                            <div class="finding-section">
+                                <h5>Evidence</h5>
+                                <ul class="evidence-list">
+            <li class="evidence-item">Potential sensitive data in error message: 'Error: "Password field contains invalid characters"'</li>
+
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="subsection-header" onclick="toggleSubsection('countermeasures', 4)">
+                            <span class="play-icon" id="play-icon-countermeasures-4">▶</span>
+                            <span class="subsection-title">Countermeasures & Solutions</span>
+                        </div>
+                        <div class="subsection-content" id="subsection-countermeasures-4" style="display:none;">
+            
+<div class="countermeasure-card">
+  <div class="countermeasure-header">
+    <div class="countermeasure-title">Implement Secure Error Handling</div>
+    <div class="countermeasure-meta">
+      <span class="priority-badge">High</span>
+      <span class="effort-badge">Easy</span>
+      <span style="color: #b0b0b0; font-size: 0.9em;">1-2 days</span>
+    </div>
+  </div>
+  <div class="countermeasure-content">
+    <div class="content-section"><h5>📋 Description</h5><p>Implement secure error handling that doesn't expose sensitive information.</p></div>
+    <div class="content-section"><h5>🔧 Implementation Steps</h5><ol class="steps-list"><li>1. Create centralized error handling middleware</li><li>2. Implement error message sanitization</li><li>3. Add error logging without sensitive data</li><li>4. Implement different error responses for dev/prod</li><li>5. Add input validation with safe error messages</li><li>6. Implement error tracking and monitoring</li></ol></div>
+    <div class="content-section"><h5>📦 Dependencies</h5><ul class="requirements-list"><li>Logging system</li><li>Error tracking service</li></ul></div>
+    <div class="content-section"><h5>🖼️ Diagram</h5><img src="secure error handling.png" alt="Diagram for Sensitive data exposed in error messages" style="max-width:100%;border-radius:8px;margin:10px 0;box-shadow:0 2px 8px #000;"/></div>
+  </div>
+</div>
+</div></div></div>
+                <div class="finding-card" data-category="Authentication">
+
+                    <div class="finding-header" onclick="toggleFinding(5)">
+                        <span class="play-icon" id="play-icon-5">▶</span>
+                        <div class="finding-title">No multi-factor authentication (MFA) option</div>
+                        <div class="finding-meta">
+                            <div class="meta-item">
+                                <span class="severity-badge severity-high">High</span>
+                            </div>
+                            <div class="meta-item">
+                                <strong>Category:</strong> Authentication
+                            </div>
+                            <div class="meta-item">
+                                <strong>Likelihood:</strong> Medium
+                            </div>
+                            <div class="meta-item">
+                                <strong>Rule ID:</strong> SAAS-NOTES-008
+                            </div>
+                            <div class="meta-item">
+                                <strong>Status:</strong> Open
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="finding-content" id="finding-content-5" style="display:none;">
+
+                        <div class="subsection-header" onclick="toggleSubsection('finding', 5)">
+                            <span class="play-icon" id="play-icon-finding-5">▶</span>
+                            <span class="subsection-title">Threat Finding</span>
+                        </div>
+                        <div class="subsection-content" id="subsection-finding-5" style="display:none;">
+                            
+                        <div class="dread-scores">
+                            <div class="dread-badge">Rank #6</div>
+                            <div class="dread-badge">Weighted DREAD: 6.0</div>
+                            <div class="dread-badge">Normal DREAD: 5.8</div>
+                            <div class="dread-badge">Severity: High</div>
+                        </div>
+                        
+                        <div class="dread-breakdown">
+                            <h4>DREAD Breakdown:</h4>
+                            <div class="dread-item">
+                                <span>Damage:</span>
+                                <span>7/10</span>
+                            </div>
+                            <div class="dread-item">
+                                <span>Reproducibility:</span>
+                                <span>6/10</span>
+                            </div>
+                            <div class="dread-item">
+                                <span>Exploitability:</span>
+                                <span>5/10</span>
+                            </div>
+                            <div class="dread-item">
+                                <span>Affected Users:</span>
+                                <span>7/10</span>
+                            </div>
+                            <div class="dread-item">
+                                <span>Discoverability:</span>
+                                <span>4/10</span>
+                            </div>
+                        </div>
+        
+                            <div class="finding-section">
+                                <h5>Description</h5>
+                                <p>The diagram shows Login flow does not mention MFA/OTP..</p>
+                            </div>
+                            <div class="finding-section">
+                                <h5>Impact</h5>
+                                <p>Authentication, Authentication, Accounts are more vulnerable to compromise</p>
+                            </div>
+                            <div class="finding-section">
+                                <h5>Evidence</h5>
+                                <ul class="evidence-list">
+            <li class="evidence-item">Login flow does not mention MFA/OTP.</li>
+
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="subsection-header" onclick="toggleSubsection('countermeasures', 5)">
+                            <span class="play-icon" id="play-icon-countermeasures-5">▶</span>
+                            <span class="subsection-title">Countermeasures & Solutions</span>
+                        </div>
+                        <div class="subsection-content" id="subsection-countermeasures-5" style="display:none;">
+            
+<div class="countermeasure-card">
+  <div class="countermeasure-header">
+    <div class="countermeasure-title">Implement Multi-Factor Authentication</div>
+    <div class="countermeasure-meta">
+      <span class="priority-badge">High</span>
+      <span class="effort-badge">Medium</span>
+      <span style="color: #b0b0b0; font-size: 0.9em;">1-2 weeks</span>
+    </div>
+  </div>
+  <div class="countermeasure-content">
+    <div class="content-section"><h5>📋 Description</h5><p>Implement MFA using TOTP (Time-based One-Time Password) for enhanced security.</p></div>
+    <div class="content-section"><h5>🔧 Implementation Steps</h5><ol class="steps-list"><li>1. Integrate TOTP library (e.g., pyotp)</li><li>2. Add MFA setup during registration</li><li>3. Implement QR code generation for authenticator apps</li><li>4. Add MFA verification during login</li><li>5. Implement backup codes for account recovery</li><li>6. Add MFA bypass for trusted devices</li></ol></div>
+    <div class="content-section"><h5>📦 Dependencies</h5><ul class="requirements-list"><li>TOTP library</li><li>QR code library</li><li>Database schema updates</li></ul></div>
+    <div class="content-section"><h5>🖼️ Diagram</h5><img src="MFA.png" alt="Diagram for No multi-factor authentication (MFA) option" style="max-width:100%;border-radius:8px;margin:10px 0;box-shadow:0 2px 8px #000;"/></div>
+  </div>
+</div>
+</div></div></div>
+                <div class="finding-card" data-category="Account Management">
+
+                    <div class="finding-header" onclick="toggleFinding(6)">
+                        <span class="play-icon" id="play-icon-6">▶</span>
+                        <div class="finding-title">No account lockout after repeated failed logins</div>
+                        <div class="finding-meta">
+                            <div class="meta-item">
+                                <span class="severity-badge severity-medium">Medium</span>
+                            </div>
+                            <div class="meta-item">
+                                <strong>Category:</strong> Account Management
+                            </div>
+                            <div class="meta-item">
+                                <strong>Likelihood:</strong> Medium
+                            </div>
+                            <div class="meta-item">
+                                <strong>Rule ID:</strong> SAAS-NOTES-009
+                            </div>
+                            <div class="meta-item">
+                                <strong>Status:</strong> Open
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="finding-content" id="finding-content-6" style="display:none;">
+
+                        <div class="subsection-header" onclick="toggleSubsection('finding', 6)">
+                            <span class="play-icon" id="play-icon-finding-6">▶</span>
+                            <span class="subsection-title">Threat Finding</span>
+                        </div>
+                        <div class="subsection-content" id="subsection-finding-6" style="display:none;">
+                            
+                        <div class="dread-scores">
+                            <div class="dread-badge">Rank #7</div>
+                            <div class="dread-badge">Weighted DREAD: 5.73</div>
+                            <div class="dread-badge">Normal DREAD: 5.8</div>
+                            <div class="dread-badge">Severity: Medium</div>
+                        </div>
+                        
+                        <div class="dread-breakdown">
+                            <h4>DREAD Breakdown:</h4>
+                            <div class="dread-item">
+                                <span>Damage:</span>
+                                <span>6/10</span>
+                            </div>
+                            <div class="dread-item">
+                                <span>Reproducibility:</span>
+                                <span>7/10</span>
+                            </div>
+                            <div class="dread-item">
+                                <span>Exploitability:</span>
+                                <span>6/10</span>
+                            </div>
+                            <div class="dread-item">
+                                <span>Affected Users:</span>
+                                <span>6/10</span>
+                            </div>
+                            <div class="dread-item">
+                                <span>Discoverability:</span>
+                                <span>4/10</span>
+                            </div>
+                        </div>
+        
+                            <div class="finding-section">
+                                <h5>Description</h5>
+                                <p>The diagram shows Multiple failed logins allowed without lockout or CAPTCHA..</p>
+                            </div>
+                            <div class="finding-section">
+                                <h5>Impact</h5>
+                                <p>Account Management, Brute-force attacks are possible</p>
+                            </div>
+                            <div class="finding-section">
+                                <h5>Evidence</h5>
+                                <ul class="evidence-list">
+            <li class="evidence-item">Multiple failed logins allowed without lockout or CAPTCHA.</li>
+
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="subsection-header" onclick="toggleSubsection('countermeasures', 6)">
+                            <span class="play-icon" id="play-icon-countermeasures-6">▶</span>
+                            <span class="subsection-title">Countermeasures & Solutions</span>
+                        </div>
+                        <div class="subsection-content" id="subsection-countermeasures-6" style="display:none;">
+            
+<div class="countermeasure-card">
+  <div class="countermeasure-header">
+    <div class="countermeasure-title">Implement Account Lockout and CAPTCHA</div>
+    <div class="countermeasure-meta">
+      <span class="priority-badge">Medium</span>
+      <span class="effort-badge">Medium</span>
+      <span style="color: #b0b0b0; font-size: 0.9em;">2-3 days</span>
+    </div>
+  </div>
+  <div class="countermeasure-content">
+    <div class="content-section"><h5>📋 Description</h5><p>Implement account lockout mechanisms and CAPTCHA to prevent brute force attacks.</p></div>
+    <div class="content-section"><h5>🔧 Implementation Steps</h5><ol class="steps-list"><li>1. Implement failed login attempt tracking</li><li>2. Add account lockout after 5 failed attempts</li><li>3. Implement progressive delays (1min, 5min, 15min, 30min)</li><li>4. Add CAPTCHA after 3 failed attempts</li><li>5. Implement account unlock mechanisms</li><li>6. Add notification emails for lockouts</li></ol></div>
+    <div class="content-section"><h5>📦 Dependencies</h5><ul class="requirements-list"><li>Redis server</li><li>CAPTCHA service</li></ul></div>
+    <div class="content-section"><h5>🖼️ Diagram</h5><img src="Account Lockout and CAPTCHA.png" alt="Diagram for No account lockout after repeated failed logins" style="max-width:100%;border-radius:8px;margin:10px 0;box-shadow:0 2px 8px #000;"/></div>
+  </div>
+</div>
+</div></div></div>
+                <div class="finding-card" data-category="User Experience">
+
+                    <div class="finding-header" onclick="toggleFinding(7)">
+                        <span class="play-icon" id="play-icon-7">▶</span>
+                        <div class="finding-title">No password strength indicator</div>
+                        <div class="finding-meta">
+                            <div class="meta-item">
+                                <span class="severity-badge severity-medium">Medium</span>
+                            </div>
+                            <div class="meta-item">
+                                <strong>Category:</strong> User Experience
+                            </div>
+                            <div class="meta-item">
+                                <strong>Likelihood:</strong> Medium
+                            </div>
+                            <div class="meta-item">
+                                <strong>Rule ID:</strong> SAAS-NOTES-018
+                            </div>
+                            <div class="meta-item">
+                                <strong>Status:</strong> Open
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="finding-content" id="finding-content-7" style="display:none;">
+
+                        <div class="subsection-header" onclick="toggleSubsection('finding', 7)">
+                            <span class="play-icon" id="play-icon-finding-7">▶</span>
+                            <span class="subsection-title">Threat Finding</span>
+                        </div>
+                        <div class="subsection-content" id="subsection-finding-7" style="display:none;">
+                            
+                        <div class="dread-scores">
+                            <div class="dread-badge">Rank #8</div>
+                            <div class="dread-badge">Weighted DREAD: 5.73</div>
+                            <div class="dread-badge">Normal DREAD: 5.8</div>
+                            <div class="dread-badge">Severity: Medium</div>
+                        </div>
+                        
+                        <div class="dread-breakdown">
+                            <h4>DREAD Breakdown:</h4>
+                            <div class="dread-item">
+                                <span>Damage:</span>
+                                <span>6/10</span>
+                            </div>
+                            <div class="dread-item">
+                                <span>Reproducibility:</span>
+                                <span>7/10</span>
+                            </div>
+                            <div class="dread-item">
+                                <span>Exploitability:</span>
+                                <span>6/10</span>
+                            </div>
+                            <div class="dread-item">
+                                <span>Affected Users:</span>
+                                <span>6/10</span>
+                            </div>
+                            <div class="dread-item">
+                                <span>Discoverability:</span>
+                                <span>4/10</span>
+                            </div>
+                        </div>
+        
+                            <div class="finding-section">
+                                <h5>Description</h5>
+                                <p>The diagram shows Password entry without strength indicator feedback..</p>
+                            </div>
+                            <div class="finding-section">
+                                <h5>Impact</h5>
+                                <p>User Experience, Users may choose weak passwords</p>
+                            </div>
+                            <div class="finding-section">
+                                <h5>Evidence</h5>
+                                <ul class="evidence-list">
+            <li class="evidence-item">Password entry without strength indicator feedback.</li>
+
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="subsection-header" onclick="toggleSubsection('countermeasures', 7)">
+                            <span class="play-icon" id="play-icon-countermeasures-7">▶</span>
+                            <span class="subsection-title">Countermeasures & Solutions</span>
+                        </div>
+                        <div class="subsection-content" id="subsection-countermeasures-7" style="display:none;">
+            
+<div class="countermeasure-card">
+  <div class="countermeasure-header">
+    <div class="countermeasure-title">Implement Password Strength Indicator</div>
+    <div class="countermeasure-meta">
+      <span class="priority-badge">Medium</span>
+      <span class="effort-badge">Easy</span>
+      <span style="color: #b0b0b0; font-size: 0.9em;">1-2 days</span>
+    </div>
+  </div>
+  <div class="countermeasure-content">
+    <div class="content-section"><h5>📋 Description</h5><p>Implement real-time password strength validation and visual feedback.</p></div>
+    <div class="content-section"><h5>🔧 Implementation Steps</h5><ol class="steps-list"><li>1. Implement password strength algorithm</li><li>2. Add real-time strength validation</li><li>3. Create visual strength indicator</li><li>4. Add password requirements display</li><li>5. Implement client-side validation</li><li>6. Add server-side password validation</li></ol></div>
+    <div class="content-section"><h5>📦 Dependencies</h5><ul class="requirements-list"><li>zxcvbn library</li><li>Frontend framework</li></ul></div>
+    <div class="content-section"><h5>🖼️ Diagram</h5><img src="password strength feedback.png" alt="Diagram for No password strength indicator" style="max-width:100%;border-radius:8px;margin:10px 0;box-shadow:0 2px 8px #000;"/></div>
+  </div>
+</div>
+</div></div></div>
+                <div class="finding-card" data-category="User Experience">
+
+                    <div class="finding-header" onclick="toggleFinding(8)">
+                        <span class="play-icon" id="play-icon-8">▶</span>
+                        <div class="finding-title">No new device login notification</div>
+                        <div class="finding-meta">
+                            <div class="meta-item">
+                                <span class="severity-badge severity-low">Low</span>
+                            </div>
+                            <div class="meta-item">
+                                <strong>Category:</strong> User Experience
+                            </div>
+                            <div class="meta-item">
+                                <strong>Likelihood:</strong> Medium
+                            </div>
+                            <div class="meta-item">
+                                <strong>Rule ID:</strong> SAAS-NOTES-017
+                            </div>
+                            <div class="meta-item">
+                                <strong>Status:</strong> Open
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="finding-content" id="finding-content-8" style="display:none;">
+
+                        <div class="subsection-header" onclick="toggleSubsection('finding', 8)">
+                            <span class="play-icon" id="play-icon-finding-8">▶</span>
+                            <span class="subsection-title">Threat Finding</span>
+                        </div>
+                        <div class="subsection-content" id="subsection-finding-8" style="display:none;">
+                            
+                        <div class="dread-scores">
+                            <div class="dread-badge">Rank #9</div>
+                            <div class="dread-badge">Weighted DREAD: 3.91</div>
+                            <div class="dread-badge">Normal DREAD: 4.0</div>
+                            <div class="dread-badge">Severity: Low</div>
+                        </div>
+                        
+                        <div class="dread-breakdown">
+                            <h4>DREAD Breakdown:</h4>
+                            <div class="dread-item">
+                                <span>Damage:</span>
+                                <span>4/10</span>
+                            </div>
+                            <div class="dread-item">
+                                <span>Reproducibility:</span>
+                                <span>5/10</span>
+                            </div>
+                            <div class="dread-item">
+                                <span>Exploitability:</span>
+                                <span>4/10</span>
+                            </div>
+                            <div class="dread-item">
+                                <span>Affected Users:</span>
+                                <span>4/10</span>
+                            </div>
+                            <div class="dread-item">
+                                <span>Discoverability:</span>
+                                <span>3/10</span>
+                            </div>
+                        </div>
+        
+                            <div class="finding-section">
+                                <h5>Description</h5>
+                                <p>The diagram shows Login from new device without user notification..</p>
+                            </div>
+                            <div class="finding-section">
+                                <h5>Impact</h5>
+                                <p>User Experience, User unaware of new device access</p>
+                            </div>
+                            <div class="finding-section">
+                                <h5>Evidence</h5>
+                                <ul class="evidence-list">
+            <li class="evidence-item">Login from new device without user notification.</li>
+
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="subsection-header" onclick="toggleSubsection('countermeasures', 8)">
+                            <span class="play-icon" id="play-icon-countermeasures-8">▶</span>
+                            <span class="subsection-title">Countermeasures & Solutions</span>
+                        </div>
+                        <div class="subsection-content" id="subsection-countermeasures-8" style="display:none;">
+            
+<div class="countermeasure-card">
+  <div class="countermeasure-header">
+    <div class="countermeasure-title">Implement New Device Detection and Notifications</div>
+    <div class="countermeasure-meta">
+      <span class="priority-badge">Low</span>
+      <span class="effort-badge">Medium</span>
+      <span style="color: #b0b0b0; font-size: 0.9em;">3-4 days</span>
+    </div>
+  </div>
+  <div class="countermeasure-content">
+    <div class="content-section"><h5>📋 Description</h5><p>Implement device fingerprinting and notification system for new device logins.</p></div>
+    <div class="content-section"><h5>🔧 Implementation Steps</h5><ol class="steps-list"><li>1. Implement device fingerprinting</li><li>2. Add device tracking and storage</li><li>3. Implement email notification system</li><li>4. Add device approval workflow</li><li>5. Implement device blocking capabilities</li><li>6. Add device management interface</li></ol></div>
+    <div class="content-section"><h5>📦 Dependencies</h5><ul class="requirements-list"><li>Email service</li><li>Redis server</li><li>IP geolocation service</li></ul></div>
+    
+  </div>
+</div>
+</div></div></div>
+                </div>
+            </div>
+            
+            
+        <script>
+            function toggleFinding(findingId) {
+                const content = document.getElementById('finding-content-' + findingId);
+                content.classList.toggle('show');
+            }
+            
+            function filterFindings(category) {
+                const findings = document.querySelectorAll('.finding-card');
+                const buttons = document.querySelectorAll('.filter-btn');
+                
+                // Update active button
+                buttons.forEach(btn => btn.classList.remove('active'));
+                event.target.classList.add('active');
+                
+                findings.forEach(finding => {
+                    const findingCategory = finding.getAttribute('data-category');
+                    if (category === 'all' || findingCategory === category) {
+                        finding.style.display = 'block';
+                    } else {
+                        finding.style.display = 'none';
+                    }
+                });
+            }
+            
+            function exportReport() {
+                const reportContent = document.documentElement.outerHTML;
+                const blob = new Blob([reportContent], { type: 'text/html' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'threat_report_' + new Date().toISOString().split('T')[0] + '.html';
+                a.click();
+                URL.revokeObjectURL(url);
+            }
+        </script>
+        
+        <style>
+        .play-icon {
+            font-size: 1.2em;
+            margin-right: 10px;
+            cursor: pointer;
+            vertical-align: middle;
+        }
+        .subsection-header {
+            background: #23232b;
+            color: #e0e0e0;
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin: 20px 0 0 0;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        .subsection-title {
+            font-size: 1.1em;
+        }
+        .subsection-content {
+            margin-bottom: 20px;
+            margin-left: 20px;
+        }
+        </style>
+        <script>
+        function toggleFinding(idx) {
+            var content = document.getElementById('finding-content-' + idx);
+            var icon = document.getElementById('play-icon-' + idx);
+            if (content.style.display === 'none' || content.style.display === '') {
+                content.style.display = 'block';
+                if (icon) icon.textContent = '▼';
+            } else {
+                content.style.display = 'none';
+                if (icon) icon.textContent = '▶';
+            }
+        }
+        function toggleSubsection(type, idx) {
+            var content = document.getElementById('subsection-' + type + '-' + idx);
+            var icon = document.getElementById('play-icon-' + type + '-' + idx);
+            if (content.style.display === 'none' || content.style.display === '') {
+                content.style.display = 'block';
+                if (icon) icon.textContent = '▼';
+            } else {
+                content.style.display = 'none';
+                if (icon) icon.textContent = '▶';
+            }
+        }
+        </script>
+        </body>
+        </html>
+        

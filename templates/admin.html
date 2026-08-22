@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Audit summary · Secure Notes{% endblock %}
+{% block content %}
+<section aria-labelledby="admin-heading">
+  <h1 id="admin-heading">Administrative audit summary</h1>
+  <p class="muted">Aggregate counts only; note contents are not exposed here.</p>
+  <dl class="summary-grid">
+    <div class="card"><dt>Users</dt><dd>{{ user_count }}</dd></div>
+    <div class="card"><dt>Notes</dt><dd>{{ note_count }}</dd></div>
+    <div class="card"><dt>Audit events</dt><dd>{{ event_count }}</dd></div>
+  </dl>
+</section>
+{% endblock %}

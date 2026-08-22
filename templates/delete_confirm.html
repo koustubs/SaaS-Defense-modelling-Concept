@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Delete note · Secure Notes{% endblock %}
+{% block content %}
+<section class="card danger-zone" aria-labelledby="delete-heading">
+  <h1 id="delete-heading">Delete “{{ note.title }}”?</h1>
+  <p>This removes the note from the demonstration database. This action cannot be undone through the application.</p>
+  <form method="post" action="/notes/{{ note.public_id }}/delete">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+    <div class="actions">
+      <button type="submit" class="danger">Delete note</button>
+      <a href="/notes/{{ note.public_id }}">Cancel</a>
+    </div>
+  </form>
+</section>
+{% endblock %}

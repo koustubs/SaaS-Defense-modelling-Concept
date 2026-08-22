@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Request error · Secure Notes{% endblock %}
+{% block content %}
+<section class="card error-card">
+  <h1>Request could not be completed</h1>
+  <p>{{ message }}</p>
+  <p class="muted">Reference: {{ correlation_id }}</p>
+  <p><a href="/">Return to the application</a></p>
+</section>
+{% endblock %}

@@ -1,0 +1,518 @@
+{
+  "schema_version": "1.0",
+  "source_archive": "DFD.zip",
+  "archive_sha256": "844167c9f3890357c4570fedfd2ff945666383867373975fd8c7945765dfbd0f",
+  "entry_count": 51,
+  "entries": [
+    {
+      "original_path": "DFD/",
+      "file_type": "directory",
+      "size": 0,
+      "sha256": null,
+      "category": "source",
+      "retained": false,
+      "new_path": null,
+      "exclusion_reason": "Directory record only; curated directories are represented by retained files."
+    },
+    {
+      "original_path": "DFD/Report/",
+      "file_type": "directory",
+      "size": 0,
+      "sha256": null,
+      "category": "duplicate",
+      "retained": false,
+      "new_path": null,
+      "exclusion_reason": "Directory record only; this subtree contains exact duplicate report artifacts."
+    },
+    {
+      "original_path": "DFD/Report/Report/",
+      "file_type": "directory",
+      "size": 0,
+      "sha256": null,
+      "category": "duplicate",
+      "retained": false,
+      "new_path": null,
+      "exclusion_reason": "Directory record only; this subtree contains exact duplicate report artifacts."
+    },
+    {
+      "original_path": "DFD/Report/Report/sample_sequence_diagram.png",
+      "file_type": "PNG image",
+      "size": 189372,
+      "sha256": "69d4845c4e16530c92acb9d552efc74a1724baf03696056aa9f36c191f98e165",
+      "category": "duplicate",
+      "retained": false,
+      "new_path": null,
+      "exclusion_reason": "Exact content duplicate of retained DFD/SFD/sample_sequence_diagram.png."
+    },
+    {
+      "original_path": "DFD/Report/Report/sample_sequence_report.html",
+      "file_type": "HTML document",
+      "size": 18778,
+      "sha256": "1482d1f59cad7cceba02ff1949f2a0eaaef9c22ca64e0db3accd251fb115b674",
+      "category": "duplicate",
+      "retained": false,
+      "new_path": null,
+      "exclusion_reason": "Exact content duplicate of retained DFD/SFD/sample_sequence_report.html."
+    },
+    {
+      "original_path": "DFD/Report/sample_sequence_diagram.png",
+      "file_type": "PNG image",
+      "size": 189372,
+      "sha256": "69d4845c4e16530c92acb9d552efc74a1724baf03696056aa9f36c191f98e165",
+      "category": "duplicate",
+      "retained": false,
+      "new_path": null,
+      "exclusion_reason": "Exact content duplicate of retained DFD/SFD/sample_sequence_diagram.png."
+    },
+    {
+      "original_path": "DFD/Report/sample_sequence_report.html",
+      "file_type": "HTML document",
+      "size": 18778,
+      "sha256": "1482d1f59cad7cceba02ff1949f2a0eaaef9c22ca64e0db3accd251fb115b674",
+      "category": "duplicate",
+      "retained": false,
+      "new_path": null,
+      "exclusion_reason": "Exact content duplicate of retained DFD/SFD/sample_sequence_report.html."
+    },
+    {
+      "original_path": "DFD/Report.zip",
+      "file_type": "ZIP archive",
+      "size": 142873,
+      "sha256": "19d1d746655d4509f5093190ad92967e2620ef16ae25cf58d2855fe44a6cf8d6",
+      "category": "nested archive",
+      "retained": false,
+      "new_path": null,
+      "exclusion_reason": "Nested archive contains only byte-identical copies of the retained sample sequence diagram and report."
+    },
+    {
+      "original_path": "DFD/SFD/",
+      "file_type": "directory",
+      "size": 0,
+      "sha256": null,
+      "category": "source",
+      "retained": false,
+      "new_path": null,
+      "exclusion_reason": "Directory record only; curated directories are represented by retained files."
+    },
+    {
+      "original_path": "DFD/SFD/plantuml_parser.py",
+      "file_type": "Python source",
+      "size": 13792,
+      "sha256": "544b153db6cb8ee4f2ace8e6b0612eb1e0e17b6daf2653133f0d193a8ae2fe8e",
+      "category": "source",
+      "retained": true,
+      "new_path": "source/plantuml_parser.py",
+      "exclusion_reason": null
+    },
+    {
+      "original_path": "DFD/SFD/README.md",
+      "file_type": "Markdown document",
+      "size": 2468,
+      "sha256": "a3b7ac0a12e046246988669647e3f9a10461b78bbd834615bc5695651ded25c8",
+      "category": "source",
+      "retained": true,
+      "new_path": "source/README.md",
+      "exclusion_reason": null
+    },
+    {
+      "original_path": "DFD/SFD/sample_sequence.uml",
+      "file_type": "PlantUML model",
+      "size": 2667,
+      "sha256": "d7033abe02bc48d1d490eee61df8fa2e014d1fa9f4272a1f32bc3ec8d3137d8d",
+      "category": "model",
+      "retained": true,
+      "new_path": "models/sample_sequence.uml",
+      "exclusion_reason": null
+    },
+    {
+      "original_path": "DFD/SFD/sample_sequence_diagram.png",
+      "file_type": "PNG image",
+      "size": 189372,
+      "sha256": "69d4845c4e16530c92acb9d552efc74a1724baf03696056aa9f36c191f98e165",
+      "category": "figure",
+      "retained": true,
+      "new_path": "figures/sample_sequence_diagram.png",
+      "exclusion_reason": null
+    },
+    {
+      "original_path": "DFD/SFD/sample_sequence_diagram.zip",
+      "file_type": "ZIP archive",
+      "size": 142450,
+      "sha256": "143f6dd819ebbff7e561810732bcb1502112145cb52035d1a5826379f529ad2a",
+      "category": "nested archive",
+      "retained": false,
+      "new_path": null,
+      "exclusion_reason": "Nested archive contains only byte-identical copies of the retained sample sequence diagram and test report."
+    },
+    {
+      "original_path": "DFD/SFD/sample_sequence_report.html",
+      "file_type": "HTML document",
+      "size": 18778,
+      "sha256": "1482d1f59cad7cceba02ff1949f2a0eaaef9c22ca64e0db3accd251fb115b674",
+      "category": "report",
+      "retained": true,
+      "new_path": "reports/sample_sequence_report.html",
+      "exclusion_reason": null
+    },
+    {
+      "original_path": "DFD/SFD/test_parser.py",
+      "file_type": "Python source",
+      "size": 2371,
+      "sha256": "4f40e5400795185b610900372c6bf22dcb98325a975f9432f4b6d464c44d0dab",
+      "category": "source",
+      "retained": true,
+      "new_path": "source/test_parser.py",
+      "exclusion_reason": null
+    },
+    {
+      "original_path": "DFD/SFD/test_report.html",
+      "file_type": "HTML document",
+      "size": 15768,
+      "sha256": "da01bf47433445139f604f3d2702ab661504468fa7c8e9a7e2980cbf51cd3175",
+      "category": "report",
+      "retained": true,
+      "new_path": "reports/test_report.html",
+      "exclusion_reason": null
+    },
+    {
+      "original_path": "DFD/SFD/threat_modeling/",
+      "file_type": "directory",
+      "size": 0,
+      "sha256": null,
+      "category": "source",
+      "retained": false,
+      "new_path": null,
+      "exclusion_reason": "Directory record only; curated directories are represented by retained files."
+    },
+    {
+      "original_path": "DFD/SFD/threat_modeling/Account Lockout and CAPTCHA.png",
+      "file_type": "PNG image",
+      "size": 79983,
+      "sha256": "e91185677725fec22a71f8fa4d030f9a6ef541105b6422ac6d4b7f109268fcdd",
+      "category": "figure",
+      "retained": true,
+      "new_path": "figures/Account Lockout and CAPTCHA.png",
+      "exclusion_reason": null
+    },
+    {
+      "original_path": "DFD/SFD/threat_modeling/countermeasures.py",
+      "file_type": "Python source",
+      "size": 55957,
+      "sha256": "54a6f181476af56c46bea6f3bc70492afa0fe6f566cc51f8e9a2e015207bc5ad",
+      "category": "source",
+      "retained": true,
+      "new_path": "source/threat_modeling/countermeasures.py",
+      "exclusion_reason": null
+    },
+    {
+      "original_path": "DFD/SFD/threat_modeling/countermeasures_report_generator.py",
+      "file_type": "Python source",
+      "size": 20739,
+      "sha256": "c9b71361cdf891daea85c289fde82a779febba4420ff42b3424421d4d32c6622",
+      "category": "source",
+      "retained": true,
+      "new_path": "source/threat_modeling/countermeasures_report_generator.py",
+      "exclusion_reason": null
+    },
+    {
+      "original_path": "DFD/SFD/threat_modeling/demo.py",
+      "file_type": "Python source",
+      "size": 6610,
+      "sha256": "ea9866467743c82abd937d65d0ea6d58d0beeaafbe4437138fa7b653805b8886",
+      "category": "source",
+      "retained": true,
+      "new_path": "source/threat_modeling/demo.py",
+      "exclusion_reason": null
+    },
+    {
+      "original_path": "DFD/SFD/threat_modeling/demo_countermeasures.py",
+      "file_type": "Python source",
+      "size": 7245,
+      "sha256": "8422e82afcd458239aa4235ddee67662b788f322c263973896d4a0e614ddd47a",
+      "category": "source",
+      "retained": true,
+      "new_path": "source/threat_modeling/demo_countermeasures.py",
+      "exclusion_reason": null
+    },
+    {
+      "original_path": "DFD/SFD/threat_modeling/demo_dread.py",
+      "file_type": "Python source",
+      "size": 3626,
+      "sha256": "cac74cb1fa89abaf5631f7e05e5b528920503112594059c962e620456e0c6e04",
+      "category": "source",
+      "retained": true,
+      "new_path": "source/threat_modeling/demo_dread.py",
+      "exclusion_reason": null
+    },
+    {
+      "original_path": "DFD/SFD/threat_modeling/DoS Mitigation via adaptive rate limiting.png",
+      "file_type": "PNG image",
+      "size": 85212,
+      "sha256": "2da46448bae0d8f50e86138228ad2e5954cf87a60ac40fced52d1d331b66827e",
+      "category": "figure",
+      "retained": true,
+      "new_path": "figures/DoS Mitigation via adaptive rate limiting.png",
+      "exclusion_reason": null
+    },
+    {
+      "original_path": "DFD/SFD/threat_modeling/dread_scorer.py",
+      "file_type": "Python source",
+      "size": 8887,
+      "sha256": "71fb6211cc14d2947009fa066830c232afee586b7de722c001bd946bf3f7541d",
+      "category": "source",
+      "retained": true,
+      "new_path": "source/threat_modeling/dread_scorer.py",
+      "exclusion_reason": null
+    },
+    {
+      "original_path": "DFD/SFD/threat_modeling/html_report_generator.py",
+      "file_type": "Python source",
+      "size": 31852,
+      "sha256": "822eea5bf6bc82e640ca92a2c35c394b4eb8a641b9130f52be043471526f178a",
+      "category": "source",
+      "retained": true,
+      "new_path": "source/threat_modeling/html_report_generator.py",
+      "exclusion_reason": null
+    },
+    {
+      "original_path": "DFD/SFD/threat_modeling/MFA.png",
+      "file_type": "PNG image",
+      "size": 90475,
+      "sha256": "f719b59b57ec9b7d57230c1c9cd3e4665f956e1294cc0f717b74fc016310ae47",
+      "category": "figure",
+      "retained": true,
+      "new_path": "figures/MFA.png",
+      "exclusion_reason": null
+    },
+    {
+      "original_path": "DFD/SFD/threat_modeling/password strength feedback.png",
+      "file_type": "PNG image",
+      "size": 76780,
+      "sha256": "a6fb9064762ae5a232d13e5d1444627f86c8b5f33377c76fdf6cba3b062ad5ec",
+      "category": "figure",
+      "retained": true,
+      "new_path": "figures/password strength feedback.png",
+      "exclusion_reason": null
+    },
+    {
+      "original_path": "DFD/SFD/threat_modeling/RBAC Enforcement for Admin Action Restriction.png",
+      "file_type": "PNG image",
+      "size": 85255,
+      "sha256": "136ba2c43239fc7cf2c3bd9bc0ef93e06109aa949a204249d67a9e82b2e792b7",
+      "category": "figure",
+      "retained": true,
+      "new_path": "figures/RBAC Enforcement for Admin Action Restriction.png",
+      "exclusion_reason": null
+    },
+    {
+      "original_path": "DFD/SFD/threat_modeling/RBAC Enforcement for Admin Action Restriction.zip",
+      "file_type": "ZIP archive",
+      "size": 561754,
+      "sha256": "65c364830b6ad9d84b450e33e37139566ce86411e5d2087b384552fceb44989d",
+      "category": "nested archive",
+      "retained": false,
+      "new_path": null,
+      "exclusion_reason": "Nested archive contains only byte-identical copies of the retained threat report and eight mitigation figures."
+    },
+    {
+      "original_path": "DFD/SFD/threat_modeling/resource quota enforcement.png",
+      "file_type": "PNG image",
+      "size": 62534,
+      "sha256": "f518a43e4f4b7cabd216cb529bf5a9548994ec735d899eb244c8fe3be5111989",
+      "category": "figure",
+      "retained": true,
+      "new_path": "figures/resource quota enforcement.png",
+      "exclusion_reason": null
+    },
+    {
+      "original_path": "DFD/SFD/threat_modeling/sample_notes_app.uml",
+      "file_type": "PlantUML model",
+      "size": 2719,
+      "sha256": "53a6bb30ebd86ac39bd39f295a1bd5fa3da0d86bc2b64625331c306693a2658b",
+      "category": "model",
+      "retained": true,
+      "new_path": "models/sample_notes_app.uml",
+      "exclusion_reason": null
+    },
+    {
+      "original_path": "DFD/SFD/threat_modeling/secure error handling.png",
+      "file_type": "PNG image",
+      "size": 78192,
+      "sha256": "cfdd9b21a9fcaef8202965ce1571340d726be222a06b5c9768f00b765a179f86",
+      "category": "figure",
+      "retained": true,
+      "new_path": "figures/secure error handling.png",
+      "exclusion_reason": null
+    },
+    {
+      "original_path": "DFD/SFD/threat_modeling/session timeout enforcement.png",
+      "file_type": "PNG image",
+      "size": 75694,
+      "sha256": "5ac40778fd521a9cc33d32fe973db0009ebf77bbec339d49a352b0a752845da2",
+      "category": "figure",
+      "retained": true,
+      "new_path": "figures/session timeout enforcement.png",
+      "exclusion_reason": null
+    },
+    {
+      "original_path": "DFD/SFD/threat_modeling/threat_matcher.py",
+      "file_type": "Python source",
+      "size": 21898,
+      "sha256": "6819fa9c0b2c600fd252b59428f7d9a9fe0a4bde3984ed83f9bc36ab1c78633f",
+      "category": "source",
+      "retained": true,
+      "new_path": "source/threat_modeling/threat_matcher.py",
+      "exclusion_reason": null
+    },
+    {
+      "original_path": "DFD/SFD/threat_modeling/threat_report.html",
+      "file_type": "HTML document",
+      "size": 79547,
+      "sha256": "5af700869b52d9f953ab26011fc3e2edc9f6ade3ef1dc14d652935e14ba10d8f",
+      "category": "report",
+      "retained": true,
+      "new_path": "reports/threat_report.html",
+      "exclusion_reason": null
+    },
+    {
+      "original_path": "DFD/SFD/threat_modeling/threat_report_20250710_152215.json",
+      "file_type": "JSON document",
+      "size": 14053,
+      "sha256": "a7cf32744c63917f3a20e9b8a09d745f67b8cca8cb520ea7b07188129633599d",
+      "category": "report",
+      "retained": true,
+      "new_path": "reports/threat_report_20250710_152215.json",
+      "exclusion_reason": null
+    },
+    {
+      "original_path": "DFD/SFD/threat_modeling/threat_rules.json",
+      "file_type": "JSON document",
+      "size": 24351,
+      "sha256": "d62de9437776b1415dc65b63a5e519fc9a41d9a37a86c22513d5c0d89e346f1b",
+      "category": "source",
+      "retained": true,
+      "new_path": "source/threat_modeling/threat_rules.json",
+      "exclusion_reason": null
+    },
+    {
+      "original_path": "DFD/SFD/threat_modeling/__pycache__/",
+      "file_type": "directory",
+      "size": 0,
+      "sha256": null,
+      "category": "cache",
+      "retained": false,
+      "new_path": null,
+      "exclusion_reason": "Generated Python bytecode cache directory; source files are retained."
+    },
+    {
+      "original_path": "DFD/SFD/threat_modeling/__pycache__/countermeasures.cpython-312.pyc",
+      "file_type": "Python bytecode",
+      "size": 34768,
+      "sha256": "e548f8b6d9b81f6d56a66a884409152da5bc7ad173c08247909c1d2c84a7734b",
+      "category": "cache",
+      "retained": false,
+      "new_path": null,
+      "exclusion_reason": "Generated Python 3.12 bytecode; authoritative source is retained."
+    },
+    {
+      "original_path": "DFD/SFD/threat_modeling/__pycache__/countermeasures.cpython-313.pyc",
+      "file_type": "Python bytecode",
+      "size": 34871,
+      "sha256": "b8316659c16e6301276f75cba8782b9f1915b0cf2a9f87cabc5986610da47cf4",
+      "category": "cache",
+      "retained": false,
+      "new_path": null,
+      "exclusion_reason": "Generated Python 3.13 bytecode; authoritative source is retained."
+    },
+    {
+      "original_path": "DFD/SFD/threat_modeling/__pycache__/countermeasures_report_generator.cpython-312.pyc",
+      "file_type": "Python bytecode",
+      "size": 21473,
+      "sha256": "906cae5e0a8414de150d0537d7a3994f839059be80ed3e7845f7a79a2271bd0a",
+      "category": "cache",
+      "retained": false,
+      "new_path": null,
+      "exclusion_reason": "Generated Python 3.12 bytecode; authoritative source is retained."
+    },
+    {
+      "original_path": "DFD/SFD/threat_modeling/__pycache__/dread_scorer.cpython-312.pyc",
+      "file_type": "Python bytecode",
+      "size": 8615,
+      "sha256": "5e4a55a446c71945f9fa8f1de1834fe1a5bb7134d78039e224b1a6ca450c17a8",
+      "category": "cache",
+      "retained": false,
+      "new_path": null,
+      "exclusion_reason": "Generated Python 3.12 bytecode; authoritative source is retained."
+    },
+    {
+      "original_path": "DFD/SFD/threat_modeling/__pycache__/dread_scorer.cpython-313.pyc",
+      "file_type": "Python bytecode",
+      "size": 8710,
+      "sha256": "a03231ff1181661c6287d0d5582ff184da288300312b8f6ab619ad6ebad5c645",
+      "category": "cache",
+      "retained": false,
+      "new_path": null,
+      "exclusion_reason": "Generated Python 3.13 bytecode; authoritative source is retained."
+    },
+    {
+      "original_path": "DFD/SFD/threat_modeling/__pycache__/html_report_generator.cpython-312.pyc",
+      "file_type": "Python bytecode",
+      "size": 30176,
+      "sha256": "2534d20dda8bee7ce70400ff54da062a3c6644cc1b3f0bed844efd622b144b13",
+      "category": "cache",
+      "retained": false,
+      "new_path": null,
+      "exclusion_reason": "Generated Python 3.12 bytecode; authoritative source is retained."
+    },
+    {
+      "original_path": "DFD/SFD/threat_modeling/__pycache__/html_report_generator.cpython-313.pyc",
+      "file_type": "Python bytecode",
+      "size": 30149,
+      "sha256": "ac7675b5854b0bad277e6b367da147202120a0f0705e827f149df50009cd3311",
+      "category": "cache",
+      "retained": false,
+      "new_path": null,
+      "exclusion_reason": "Generated Python 3.13 bytecode; authoritative source is retained."
+    },
+    {
+      "original_path": "DFD/SFD/threat_modeling/__pycache__/threat_matcher.cpython-312.pyc",
+      "file_type": "Python bytecode",
+      "size": 28540,
+      "sha256": "257cee98d140288a29ff51731c4ab58027493c865d95af9fe0f073c4cd44b451",
+      "category": "cache",
+      "retained": false,
+      "new_path": null,
+      "exclusion_reason": "Generated Python 3.12 bytecode; authoritative source is retained."
+    },
+    {
+      "original_path": "DFD/SFD/threat_modeling/__pycache__/threat_matcher.cpython-313.pyc",
+      "file_type": "Python bytecode",
+      "size": 28725,
+      "sha256": "54c81aa2c07cf7cd065d319292e7cd908952202a50f46c67e6caa3bb00172e6d",
+      "category": "cache",
+      "retained": false,
+      "new_path": null,
+      "exclusion_reason": "Generated Python 3.13 bytecode; authoritative source is retained."
+    },
+    {
+      "original_path": "DFD/SFD/__pycache__/",
+      "file_type": "directory",
+      "size": 0,
+      "sha256": null,
+      "category": "cache",
+      "retained": false,
+      "new_path": null,
+      "exclusion_reason": "Generated Python bytecode cache directory; source files are retained."
+    },
+    {
+      "original_path": "DFD/SFD/__pycache__/plantuml_parser.cpython-312.pyc",
+      "file_type": "Python bytecode",
+      "size": 14882,
+      "sha256": "6429487e44f3636e86967dad9badfba2185f22ae727a7935aa511993cf360c86",
+      "category": "cache",
+      "retained": false,
+      "new_path": null,
+      "exclusion_reason": "Generated Python 3.12 bytecode; authoritative source is retained."
+    }
+  ]
+}

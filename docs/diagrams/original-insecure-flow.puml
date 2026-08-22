@@ -1,0 +1,67 @@
+@startuml
+title Historical insecure notes flow represented in the 2025 evidence
+
+actor "User" as User
+participant "Web client" as Web
+participant "API gateway" as Gateway
+participant "Authentication service" as Auth
+participant "Notes service" as Notes
+database "Database" as DB
+
+note over User,DB
+This diagram is a faithful modernization of the security-relevant behavior
+described by the original sample_notes_app.uml. It is diagram evidence,
+not proof that a deployed implementation had these weaknesses.
+end note
+
+== Unauthenticated listing ==
+User -> Web : Open notes page
+Web -> Gateway : GET /api/notes without credentials
+Gateway -> Notes : Forward request
+Notes -> DB : Query notes without owner scope shown
+DB --> Notes : All notes
+Notes --> Web : Notes response
+
+== Login and repeated failures ==
+loop Repeated attempts
+  User -> Web : Submit username and password
+  Web -> Gateway : POST /api/login
+  Gateway -> Auth : Validate credentials
+  Auth --> Web : Invalid credentials
+end
+note right of Auth
+No failed-attempt limit or temporary lockout is shown.
+MFA is also absent from the historical diagram.
+end note
+
+== Create and export ==
+User -> Web : Submit note title and body
+Web -> Gateway : POST /api/notes/create
+Gateway -> Notes : Create note
+note right of Notes
+Input validation and audit recording are not shown.
+end note
+Notes -> DB : Insert note
+User -> Web : Request export
+Web -> Gateway : GET /api/notes/export
+Gateway -> Notes : Export request
+Notes -> DB : Query all notes
+DB --> User : Exported data
+note right of Gateway
+Rate limiting and owner-scoped export are not shown.
+end note
+
+== Detailed error ==
+DB --> Notes : Database error with sensitive field detail
+Notes --> Web : Detailed error response
+Web --> User : Display internal error
+
+== Delete ==
+User -> Web : Delete note
+Web -> Gateway : DELETE /api/notes/{id}
+note right of Gateway
+Owner-scoped authorization is not shown.
+The UI flow has no confirmation step.
+end note
+@enduml
+

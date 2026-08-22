@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}{{ note.title }} · Secure Notes{% endblock %}
+{% block content %}
+<article class="card note-detail">
+  <div class="page-heading">
+    <div>
+      <h1>{{ note.title }}</h1>
+      <p class="muted">Updated <time datetime="{{ note.updated_at.isoformat() }}Z">{{ note.updated_at.strftime('%Y-%m-%d %H:%M UTC') }}</time></p>
+    </div>
+    <div class="actions">
+      <a class="button secondary" href="/notes/{{ note.public_id }}/edit">Edit</a>
+      <a class="button danger" href="/notes/{{ note.public_id }}/delete">Delete</a>
+    </div>
+  </div>
+  <pre class="note-body">{{ note.body }}</pre>
+</article>
+{% endblock %}
